@@ -27,73 +27,113 @@ class _foodAddPage extends State<foodAddPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('음식 등록'),
+        backgroundColor: Color(0xff69DFCB),
       ),
       body: SingleChildScrollView(
         key: this.formKey,
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: '식품명',
+          child: Center(
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(3.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '식품명',
+                    ),
+                    controller: foodName,
                   ),
-                controller: foodName,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '1회제공량',
                 ),
-                controller: foodSize,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '에너지(㎉)',
+                Container(
+                  padding: EdgeInsets.all(3.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '1회제공량',
+                    ),
+                    controller: foodSize,
+                  ),
                 ),
-                controller: calorie,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '단백질(g)',
+                Container(
+                  padding: EdgeInsets.all(3.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '에너지(㎉)',
+                    ),
+                    controller: calorie,
+                  ),
                 ),
-                controller: protein,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '지방(g)',
+                Container(
+                  padding: EdgeInsets.all(3.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '단백질(g)',
+                    ),
+                    controller: protein,
+                  ),
                 ),
-                controller: fat,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '탄수화물(g)',
+                Container(
+                  padding: EdgeInsets.all(3.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '지방(g)',
+                    ),
+                    controller: fat,
+                  ),
                 ),
-                controller: carbohydrate,
-              ),
-              TextButton(
-                child: Text('저장'),
-                style: ButtonStyle(
+                Container(
+                  padding: EdgeInsets.all(3.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '탄수화물(g)',
+                    ),
+                    controller: carbohydrate,
+                  ),
                 ),
-                onPressed: () async {
-                  Food food = Food(
-                      food_name: foodName.text,
-                      food_size: foodSize.text,
-                      calorie: calorie.text,
-                      protein: protein.text,
-                      fat: fat.text,
-                      carbohydrate: carbohydrate.text,
-                  );
-                  fooddb?.add(food);
-                  Navigator.of(context).pop(food);
-                },  //입력받은 값들을 데이터베이스에 넣음
-              ),
-            ],
+                Container(
+                  padding: EdgeInsets.all(3.0),
+                  width: 70,
+                  height: 50,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      // padding: EdgeInsets.all(1.0),
+                        backgroundColor: Color(0xff69DFCB),
+                        side: BorderSide(
+                          color: Color(0xff69DFCB),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        )
+                    ),
+                    child: Text(
+                      "저장",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    onPressed: () async {
+                      Food food = Food(
+                        food_name: foodName.text,
+                        food_size: foodSize.text,
+                        calorie: calorie.text,
+                        protein: protein.text,
+                        fat: fat.text,
+                        carbohydrate: carbohydrate.text,
+                      );
+                      fooddb?.add(food);
+                      Navigator.of(context).pop(food);
+                    },  //입력받은 값들을 데이터베이스에 넣음
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

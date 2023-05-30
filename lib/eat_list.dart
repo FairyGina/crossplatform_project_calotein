@@ -15,8 +15,7 @@ class eatPage extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        
       ),
       home: _eatPage(),
     );
@@ -48,6 +47,7 @@ class _eatState extends State<_eatPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('먹은 음식'),
+        backgroundColor: Color(0xff69DFCB),
       ),
       body:SingleChildScrollView(
         child: Container(
@@ -80,63 +80,73 @@ class _eatState extends State<_eatPage> {
                                   ),
                                 ),
                                 child: Card(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.zero,
-                                  ),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                          children: <Widget>[
-                                            Container(
-                                              // alignment: Alignment.topRight,
-                                              padding: EdgeInsets.all(10.0),
-                                              child: Text(
-                                                food.food_name ?? '',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                ),
+                                    elevation: 0,
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Column(
+                                            children: <Widget>[
+                                              Row(
+                                                  children: <Widget>[
+                                                    Container(
+                                                      // alignment: Alignment.topRight,
+                                                      padding: EdgeInsets.all(10.0),
+                                                      child: Text(
+                                                        food.food_name ?? '',
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Container(
+                                                        padding: EdgeInsets.all(10.0),
+                                                        alignment: Alignment.centerRight,
+                                                        child: Text(
+                                                          "${food.calorie!.toString() ?? ''} Kcal",
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ]
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: Container(
-                                                padding: EdgeInsets.all(10.0),
-                                                alignment: Alignment.centerRight,
-                                                child: Text(
-                                                  "${food.calorie!.toString() ?? ''} Kcal",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Container(
+                                                    padding: EdgeInsets.only(bottom: 2.0, right: 2.0),
+                                                    child: Text("탄수화물: ${food.carbohydrate!.toString() ?? ''} g /"),
                                                   ),
-                                                ),
+                                                  Container(
+                                                    padding: EdgeInsets.only(bottom: 2.0, right: 2.0),
+                                                    child: Text("단백질: ${food.protein!.toString() ?? ''} g /"),
+                                                  ),
+                                                  Container(
+                                                    padding: EdgeInsets.only(bottom: 2.0),
+                                                    child: Text("지방: ${food.fat!.toString() ?? ''} g"),
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                          ]
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                            child: Text("탄수화물: ${food.carbohydrate!.toString() ?? ''} g /"),
+                                            ],
                                           ),
-                                          Container(
-                                            child: Text("단백질: ${food.protein!.toString() ?? ''} g /"),
-                                          ),
-                                          Container(
-                                            child: Text("지방: ${food.fat!.toString() ?? ''} g"),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    )
                                 ),
                               );
-                            },
-                          ),
-                        );
-                      }
-                      else {
-                        return Text('No data');
-                      }
+                      },
+                    ),
+                  );
+                }
+                else {
+                  return Text('No data');
+                    }
                   }
                 }, // future: foodList,
               ),

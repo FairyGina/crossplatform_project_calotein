@@ -30,8 +30,7 @@ class foodPage extends StatelessWidget {
     return MaterialApp(
      title: 'Flutter Demo',
      theme: ThemeData(
-       colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-       useMaterial3: true,
+
      ),
      home: _foodPage()
    );
@@ -66,6 +65,7 @@ class foodPageState extends State<_foodPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('검색'),
+        backgroundColor: Color(0xff69DFCB),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
@@ -98,7 +98,7 @@ class foodPageState extends State<_foodPage> {
                         SizedBox(width: 8,),
                         IconButton(
                           icon: Icon(Icons.search),
-                          color: Colors.black12,
+                          color: Colors.black54,
                           onPressed: () async {
                             List<Food> searchResuts = await fooddb!.searchFood(textController.text);  //위에서 받은 문자열이 포함된 데이터를 food_db에 있는 함수로 받아옴
                             setState(() {
@@ -113,7 +113,12 @@ class foodPageState extends State<_foodPage> {
                         Container(
                           padding: EdgeInsets.only(left: 50, right: 50),
                           child: TextButton(
-                            child: Text('음식 등록'),
+                            child: Text(
+                              '음식 등록',
+                              style: TextStyle(
+                                color: Color(0xff69DFCB),
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.push(
                                   context, MaterialPageRoute(builder: (_) => foodAddPage())
@@ -124,7 +129,12 @@ class foodPageState extends State<_foodPage> {
                         Container(
                           padding: EdgeInsets.only(left: 50, right: 50),
                           child: TextButton(
-                            child: Text('먹은 음식'),
+                            child: Text(
+                              '먹은 음식',
+                              style: TextStyle(
+                                color: Color(0xff69DFCB),
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.push(
                                   context, MaterialPageRoute(builder: (_) => eatPage())
@@ -138,7 +148,7 @@ class foodPageState extends State<_foodPage> {
                     child: Container(
                       color: Colors.white,
                       height: MediaQuery.of(context).size.height,
-                      child:Column(
+                      child: Column(
                         children: <Widget>[
                           FutureBuilder<List<Food>>(
                             future: datalist,
@@ -165,77 +175,91 @@ class foodPageState extends State<_foodPage> {
                                               ),
                                             ),
                                             child: Card(
+                                              elevation: 0,
                                               color: Colors.white,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.zero,
                                               ),
-                                              child: Column(
+                                              child: Row(
                                                 children: <Widget>[
-                                                  Row(
+                                                  Expanded(
+                                                    child: Column(
                                                       children: <Widget>[
-                                                        Container(
-                                                          // alignment: Alignment.topRight,
-                                                          padding: EdgeInsets.all(10.0),
-                                                          child: Text(
-                                                            food.food_name ?? '',
-                                                            style: TextStyle(
-                                                              fontSize: 16,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child: Container(
-                                                            padding: EdgeInsets.all(10.0),
-                                                            alignment: Alignment.centerRight,
-                                                            child: Text(
-                                                              "${food.calorie!.toString() ?? ''} Kcal",
-                                                              style: TextStyle(
-                                                                fontSize: 16,
+                                                        Row(
+                                                            children: <Widget>[
+                                                              Container(
+                                                                // alignment: Alignment.topRight,
+                                                                padding: EdgeInsets.all(10.0),
+                                                                child: Text(
+                                                                  food.food_name ?? '',
+                                                                  style: TextStyle(
+                                                                    fontSize: 16,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
+                                                              Expanded(
+                                                                child: Container(
+                                                                  padding: EdgeInsets.all(10.0),
+                                                                  alignment: Alignment.centerRight,
+                                                                  child: Text(
+                                                                    "${food.calorie!.toString() ?? ''} Kcal",
+                                                                    style: TextStyle(
+                                                                      fontSize: 16,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ]
                                                         ),
-                                                        SizedBox(
-                                                          width: 50,
-                                                          height: 40,
-                                                          child: TextButton(
-                                                            // style: TextButton.styleFrom(
-                                                            //   // padding: EdgeInsets.all(1.0),
-                                                            //     backgroundColor: Color(0xff69DFCB),
-                                                            //     side: BorderSide(
-                                                            //       color: Color(0xff69DFCB),
-                                                            //     ),
-                                                            //     shape: RoundedRectangleBorder(
-                                                            //       borderRadius: BorderRadius.circular(10),
-                                                            //     )
-                                                            // ),
-                                                            child: Text(
-                                                              "추가",
-                                                              style: TextStyle(color: Color(0xff69DFCB),),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: <Widget>[
+                                                            Container(
+                                                              padding: EdgeInsets.only(bottom: 2.0, right: 2.0),
+                                                              child: Text("탄수화물: ${food.carbohydrate!.toString() ?? ''} g /"),
                                                             ),
-                                                            onPressed: () {
-                                                              eatdb?.add(food);
-                                                            },
+                                                            Container(
+                                                              padding: EdgeInsets.only(bottom: 2.0, right: 2.0),
+                                                              child: Text("단백질: ${food.protein!.toString() ?? ''} g /"),
+                                                            ),
+                                                            Container(
+                                                              padding: EdgeInsets.only(bottom: 2.0),
+                                                              child: Text("지방: ${food.fat!.toString() ?? ''} g"),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding: EdgeInsets.all(4.0),
+                                                    width: 50,
+                                                    height: 40,
+                                                    child: TextButton(
+                                                      style: TextButton.styleFrom(
+                                                        // padding: EdgeInsets.all(1.0),
+                                                          backgroundColor: Color(0xff69DFCB),
+                                                          side: BorderSide(
+                                                            color: Color(0xff69DFCB),
                                                           ),
-                                                        )
-                                                      ]
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: <Widget>[
-                                                      Container(
-                                                        child: Text("탄수화물: ${food.carbohydrate!.toString() ?? ''} g /"),
+                                                          shape: RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                          )
                                                       ),
-                                                      Container(
-                                                        child: Text("단백질: ${food.protein!.toString() ?? ''} g /"),
+                                                      child: Text(
+                                                        "추가",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 10,
+                                                        ),
                                                       ),
-                                                      Container(
-                                                        child: Text("지방: ${food.fat!.toString() ?? ''} g"),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                      onPressed: () {
+                                                        eatdb?.add(food);
+                                                      },
+                                                    ),
+                                                  )
                                                 ],
-                                              ),
+                                              )
                                             ),
                                           );
                                         },
