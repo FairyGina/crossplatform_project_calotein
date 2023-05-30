@@ -13,12 +13,14 @@ class foodAddPage extends StatefulWidget {
 class _foodAddPage extends State<foodAddPage> {
   final formKey = GlobalKey<FormState>();
   foodDatabase? fooddb = foodDatabase();
+
   final foodName = TextEditingController();
   final foodSize = TextEditingController();
   final calorie = TextEditingController();
   final protein = TextEditingController();
   final fat = TextEditingController();
   final carbohydrate = TextEditingController();
+  //입력받은 값들을 저장하기 위한 변수
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +79,6 @@ class _foodAddPage extends State<foodAddPage> {
               TextButton(
                 child: Text('저장'),
                 style: ButtonStyle(
-
                 ),
                 onPressed: () async {
                   Food food = Food(
@@ -90,7 +91,7 @@ class _foodAddPage extends State<foodAddPage> {
                   );
                   fooddb?.add(food);
                   Navigator.of(context).pop(food);
-                },
+                },  //입력받은 값들을 데이터베이스에 넣음
               ),
             ],
           ),
@@ -98,5 +99,4 @@ class _foodAddPage extends State<foodAddPage> {
       ),
     );
   }
-
 }

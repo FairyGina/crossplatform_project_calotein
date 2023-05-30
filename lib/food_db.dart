@@ -50,7 +50,7 @@ class foodDatabase {
     for (dynamic data in list) {
       Food food = Food.fromJson(data);
       await add(food);
-    }
+    } //json 파일에 있는 거 받아서 데이터베이스에 넣는 것
   }
 
   Future add(Food food) async {
@@ -63,7 +63,7 @@ class foodDatabase {
       'fat': food.fat,
       'carbohydrate': food.carbohydrate,
     }, conflictAlgorithm: ConflictAlgorithm.replace);
-  }
+  } //데이터베이스에 저장하는 것
 
   Future<List<Food>> getFood() async {
     final db = await database;
@@ -78,7 +78,7 @@ class foodDatabase {
         carbohydrate: food['carbohydrate'].toString(),
       );
     }).toList();
-  }
+  } //데이터베이스에서 데이터 가져오는 것
 
   Future searchFood(String str) async {
     final db = await database;
@@ -97,6 +97,6 @@ class foodDatabase {
         carbohydrate: food['carbohydrate'].toString(),
       );
     }).toList();
-  }
+  } //받아온 문자열을 포함한 데이터만 가져오는 것
 }
 

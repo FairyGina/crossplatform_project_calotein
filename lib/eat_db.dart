@@ -38,7 +38,7 @@ class eatDatabase {
     )  
     ''';
     db.execute(sql);
-  }
+  } //이거 로컬 시간 받아오는 거 'localtime' 써서 해결(없으면 표준 국제 시간으로 받아옴)
 
   Future _onUpgrade(Database db, int oldVersion, int newVersion) async {}
 
@@ -52,27 +52,27 @@ class eatDatabase {
       'fat': food.fat,
       'carbohydrate': food.carbohydrate,
     });
-  }
+  } //리스트에서 누른 음식 추가하는 거(그날 먹은 음식)
 
   Future<List<Food>> getCurrentDayEat() async {
     final db = await database;
-    final DateTime now = DateTime.now();
+    final DateTime now = DateTime.now();  //여기서는 now만 써도 로컬 시간으로 잘 받아옴
     DateTime currentDay;
 
     if (now.hour >= 3) {
       currentDay = DateTime(now.year, now.month, now.day);
     } else {
       currentDay = DateTime(now.year, now.month, now.day - 1);
-    }
+    } //3시를 기준으로 현재 날짜를 정함
 
-    final DateTime startTime = DateTime(currentDay.year, currentDay.month, currentDay.day, 3);
-    final DateTime endTime = startTime.add(Duration(days: 1));
+    final DateTime startTime = DateTime(currentDay.year, currentDay.month, currentDay.day, 3);  //현재 날짜의 새벽 3시 받아오기
+    final DateTime endTime = startTime.add(Duration(days: 1));  //다음날까지
 
     final List<Map<String, dynamic>>? maps = await db?.query(
       'eat',
       where: 'date >= ? AND date < ?',
-      whereArgs: [startTime.toIso8601String(), endTime.toIso8601String()],
-    );
+      whereArgs: [startTime.toString(), endTime.toString()],  //날짜를 문자열로 저장하니까 쿼리에 넣을 때도 문자열로 바꿔서 넣기
+    );  //하루에 해당하는 데이터만 받아오기
 
     return maps!.map((food) {
       return Food(
@@ -84,21 +84,21 @@ class eatDatabase {
         carbohydrate: food['carbohydrate'].toString(),
       );
     }).toList();
-  }
+  } //현재 날짜의 데이터만 받아오는 거
 
-  Future<List<Food>> getEat() async {
-    final db = await database;
-    final List<Map<String, dynamic>>? maps = await db?.query('eat');
-
-    return maps!.map((food) {
-      return Food(
-        food_name: food['food_name'].toString(),
-        food_size: food['food_size'].toString(),
-        calorie: food['calorie'].toString(),
-        protein: food['protein'].toString(),
-        fat: food['fat'].toString(),
-        carbohydrate: food['carbohydrate'].toString(),
-      );
-    }).toList();
-  }
+  // Future<List<Food>> getEat() async {
+  //   final db = await database;
+  //   final List<Map<String, dynamic>>? maps = await db?.query('eat');
+  //
+  //   return maps!.map((food) {
+  //     return Food(
+  //       food_name: food['food_name'].toString(),
+  //       food_size: food['food_size'].toString(),
+  //       calorie: food['calorie'].toString(),
+  //       protein: food['protein'].toString(),
+  //       fat: food['fat'].toString(),
+  //       carbohydrate: food['carbohydrate'].toString(),
+  //     );
+  //   }).toList();
+  // } //데이터베이스에 있는 데이터 모두 받아오기 필요없으면 지우기
 }

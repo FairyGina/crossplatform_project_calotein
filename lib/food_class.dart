@@ -41,14 +41,5 @@ class Food {
   double? get parsedProtein => double.tryParse(protein!);
   double? get parsedFat => double.tryParse(fat!);
   double? get parsedCarbohydrate => double.tryParse(carbohydrate!);
-}
-
-class FoodList {
-  final List<Food>? foods;
-  FoodList({this.foods});
-  factory FoodList.fromJson(String jsonString) {
-    List<Map<String, dynamic>> listFromJson = List<Map<String, dynamic>>.from(json.decode(jsonString));
-    List<Food> foods = listFromJson.map((food) => Food.fromJson(food)).toList();
-    return FoodList(foods: foods);
-  }
+  //이거는 데이터베이스에 있는 거 더블 타입으로 받아오는 건데 그래프 만들 때 필요하면 써
 }

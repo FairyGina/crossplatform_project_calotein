@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:convert';
 import 'dart:async';
 
 import 'package:calotin/eat_list.dart';
@@ -8,15 +7,16 @@ import 'package:calotin/food_add.dart';
 import 'package:calotin/food_db.dart';
 import 'package:calotin/food_class.dart';
 import 'package:calotin/eat_db.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // String dbpath = join(await getDatabasesPath(), 'food.db');
+  // if(await databaseExists(dbpath)) {
+  //   await deleteDatabase(dbpath);
+  // } //db 삭제(처음부터 존재하면)
+
+  // String dbpath = join(await getDatabasesPath(), 'eat.db');
   // if(await databaseExists(dbpath)) {
   //   await deleteDatabase(dbpath);
   // } //db 삭제(처음부터 존재하면)
@@ -44,19 +44,21 @@ class _foodPage extends StatefulWidget {
 }
 
 class foodPageState extends State<_foodPage> {
-  final textController = TextEditingController();
+  final textController = TextEditingController(); //검색어 받아올 변수
   foodDatabase? fooddb = foodDatabase();
-  eatDatabase eatdb = eatDatabase();
+  eatDatabase? eatdb = eatDatabase();
   late Future<List<Food>> datalist = Future.value([]);
 
   @override
   void initState() {
     super.initState();
+
+    eatdb?.initDB();
     fooddb?.createFood().then((value) {
       setState(() {
-        datalist = fooddb!.getFood();
+        datalist = fooddb!.getFood(); //화면에 리스트 띄워두는 건데 필요없으면 나중에 지울 것
       });
-    });
+    }); //데이터베이스 생성하는 거 나중에 다 메인으로 옮길 것
   }
 
   @override
@@ -98,9 +100,9 @@ class foodPageState extends State<_foodPage> {
                           icon: Icon(Icons.search),
                           color: Colors.black12,
                           onPressed: () async {
-                            List<Food> searchResuts = await fooddb!.searchFood(textController.text);
+                            List<Food> searchResuts = await fooddb!.searchFood(textController.text);  //위에서 받은 문자열이 포함된 데이터를 food_db에 있는 함수로 받아옴
                             setState(() {
-                              datalist = Future.value(searchResuts);
+                              datalist = Future.value(searchResuts);  //검색어를 포함한 데이터만 화면에 띄움
                             });
                           },
                         ),
@@ -212,7 +214,7 @@ class foodPageState extends State<_foodPage> {
                                                               style: TextStyle(color: Color(0xff69DFCB),),
                                                             ),
                                                             onPressed: () {
-                                                              eatdb.add(food);
+                                                              eatdb?.add(food);
                                                             },
                                                           ),
                                                         )
@@ -244,7 +246,6 @@ class foodPageState extends State<_foodPage> {
                                     return Text('No data');
                                   }
                               }
-                              return CircularProgressIndicator();
                             }, // future: foodList,
                           ),
                         ],
@@ -256,7 +257,6 @@ class foodPageState extends State<_foodPage> {
             ],
           )
         ),
-
       ),
     );
    }

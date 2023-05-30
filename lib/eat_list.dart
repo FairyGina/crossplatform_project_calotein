@@ -2,24 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:calotin/food_class.dart';
 import 'package:calotin/eat_db.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  String dbpath = join(await getDatabasesPath(), 'eat.db');
-  if(await databaseExists(dbpath)) {
-    await deleteDatabase(dbpath);
-  } //db 삭제(처음부터 존재하면)
-
   runApp(eatPage());
 }
 
 class eatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    eatDatabase? eatdb = eatDatabase();
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -46,13 +37,10 @@ class _eatState extends State<_eatPage> {
   @override
   void initState() {
     super.initState();
-    initDatabaseAndGetData();
-  }
+    eatList = eatdb?.getCurrentDayEat();  //eat_db 파일에 있는 함수로 데이터 저장
+    setState(() {
 
-  Future<void> initDatabaseAndGetData() async {
-    await eatdb?.initDB(); // Call the initDB method to create the table
-    eatList = eatdb?.getEat();
-    setState(() {}); // Update the state to reflect the changes
+    });
   }
 
   @override
@@ -150,7 +138,6 @@ class _eatState extends State<_eatPage> {
                         return Text('No data');
                       }
                   }
-                  return CircularProgressIndicator();
                 }, // future: foodList,
               ),
             ],
