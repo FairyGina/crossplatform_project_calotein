@@ -1,12 +1,15 @@
+import 'package:calotin/class_user_information.dart';
+import 'package:calotin/user_information.dart';
 import 'package:flutter/material.dart';
 import 'package:calotin/food.dart';
+import 'package:calotin/db_user_information.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  db_user_information db_user_info=db_user_information();
+
+  @override
+  void initState(){
+    super.initState();
+    db_user_info.initDB().then((value) {
+      setState(() {
+        // datalist = fooddb!.getFood(); //화면에 리스트 띄워두는 건데 필요없으면 나중에 지울 것
+      });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ElevatedButton(
           onPressed: () { 
             Navigator.push(
-              context, MaterialPageRoute(builder: (_) => foodPage())  //이거는 그냥 메인에서 음식 검색 페이지로 넘어가는 실험용
+              context, MaterialPageRoute(builder: (_) => user_info())  //이거는 그냥 메인에서 음식 검색 페이지로 넘어가는 실험용
             );
           },
           child: Text('button'),

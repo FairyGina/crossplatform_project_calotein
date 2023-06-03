@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'package:calotin/food_db.dart';
-
 class Food {
   String? food_name;
   String? food_size;

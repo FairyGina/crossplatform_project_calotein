@@ -86,19 +86,19 @@ class eatDatabase {
     }).toList();
   } //현재 날짜의 데이터만 받아오는 거
 
-  // Future<List<Food>> getEat() async {
-  //   final db = await database;
-  //   final List<Map<String, dynamic>>? maps = await db?.query('eat');
-  //
-  //   return maps!.map((food) {
-  //     return Food(
-  //       food_name: food['food_name'].toString(),
-  //       food_size: food['food_size'].toString(),
-  //       calorie: food['calorie'].toString(),
-  //       protein: food['protein'].toString(),
-  //       fat: food['fat'].toString(),
-  //       carbohydrate: food['carbohydrate'].toString(),
-  //     );
-  //   }).toList();
-  // } //데이터베이스에 있는 데이터 모두 받아오기 필요없으면 지우기
+// Future<List<Food>> getEat() async {
+//   final db = await database;
+//   final List<Map<String, dynamic>>? maps = await db?.query('eat');
+//
+//   return maps!.map((food) {
+//     return Food(
+//       food_name: food['food_name'].toString(),
+//       food_size: food['food_size'].toString(),
+//       calorie: food['calorie'].toString(),
+//       protein: food['protein'].toString(),
+//       fat: food['fat'].toString(),
+//       carbohydrate: food['carbohydrate'].toString(),
+//     );
+//   }).toList();
+// } //데이터베이스에 있는 데이터 모두 받아오기 필요없으면 지우기
 }
