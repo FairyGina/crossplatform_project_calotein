@@ -32,11 +32,4 @@ class Food {
     "fat" : fat,
     "carbohydrate" : carbohydrate
   };
-
-  double? get parsedFoodSize => double.tryParse(food_size!);
-  double? get parsedCalorie => double.tryParse(calorie!);
-  double? get parsedProtein => double.tryParse(protein!);
-  double? get parsedFat => double.tryParse(fat!);
-  double? get parsedCarbohydrate => double.tryParse(carbohydrate!);
-  //이거는 데이터베이스에 있는 거 더블 타입으로 받아오는 건데 그래프 만들 때 필요하면 써
 }

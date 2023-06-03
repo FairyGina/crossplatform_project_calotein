@@ -28,16 +28,6 @@ class db_user_information {
     return _database;
   }
 
-  // Future initDB() async {
-  //   String path = join(await getDatabasesPath(), 'user_info.db');
-  //
-  //   return await openDatabase(
-  //       path,
-  //       version: 1,
-  //       onCreate: _onCreate,
-  //       onUpgrade: _onUpgrade
-  //   );
-  // }
 
   Future _onCreate(Database db, int version) async {
     String sql = '''
@@ -77,20 +67,37 @@ class db_user_information {
     });
   } //리스트에서 누른 음식 추가하는 거(그날 먹은 음식)
 
-//
-// Future<List<user_information>> getEat() async {
-//   final db = await database;
-//   final List<Map<String, dynamic>>? maps = await db?.query('eat');
-//
-//   return maps!.map((food) {
-//     return Food(
-//       food_name: food['food_name'].toString(),
-//       food_size: food['food_size'].toString(),
-//       calorie: food['calorie'].toString(),
-//       protein: food['protein'].toString(),
-//       fat: food['fat'].toString(),
-//       carbohydrate: food['carbohydrate'].toString(),
-//     );
-//   }).toList();
-// } //데이터베이스에 있는 데이터 모두 받아오기 필요없으면 지우기
+  // Future<List<user_information>> getUserInfo() async {
+  //   final db = await database;
+  //   final List<Map<String, dynamic>>? maps = await db?.query('user_info');
+  //
+  //   return maps!.map((map) {
+  //     return user_information(
+  //       year: map['year'].toString(),
+  //       month: map['month'].toString(),
+  //       day: map['day'].toString(),
+  //       gender: map['gender'].toString(),
+  //       cm: map['cm'].toString(),
+  //       kg: map['kg'].toString(),
+  //       activity: map['activity'].toString(),
+  //       goal: map['goal'].toString(),
+  //     );
+  //   }).toList();
+  // }
+
+  Future<user_information?> getUserInfo() async {
+    final db = await database;
+    final List<Map<String, dynamic>>? maps = await db?.query(
+      'user_info',
+      orderBy: 'user_no DESC', // id 값 기준으로 내림차순 정렬
+      limit: 1, // 결과를 1개로 제한
+    );
+
+    if (maps != null && maps.isNotEmpty) {
+      return user_information.fromMap(maps.first);
+    }
+
+    return null; // 데이터가 없을 경우 null 반환
+  }
+
 }

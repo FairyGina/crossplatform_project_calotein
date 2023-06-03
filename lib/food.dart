@@ -52,12 +52,12 @@ class foodPageState extends State<_foodPage> {
   void initState() {
     super.initState();
 
-    eatdb?.initDB();
-    fooddb?.createFood().then((value) {
-      setState(() {
-        // datalist = fooddb!.getFood(); //화면에 리스트 띄워두는 건데 필요없으면 나중에 지울 것
-      });
-    }); //데이터베이스 생성하는 거 나중에 다 메인으로 옮길 것
+    // eatdb?.initDB();
+    // fooddb?.createFood().then((value) {
+    //   setState(() {
+    //     // datalist = fooddb!.getFood(); //화면에 리스트 띄워두는 건데 필요없으면 나중에 지울 것
+    //   });
+    // }); //데이터베이스 생성하는 거 나중에 다 메인으로 옮길 것
   }
 
   @override
