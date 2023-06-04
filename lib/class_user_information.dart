@@ -81,4 +81,3 @@ class user_information{
     return goal;
   }
 }
-
