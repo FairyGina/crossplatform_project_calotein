@@ -6,6 +6,8 @@ import 'dart:convert';
 
 import 'package:calotin/food_class.dart';
 
+
+
 class foodDatabase {
   Database? _database;
 

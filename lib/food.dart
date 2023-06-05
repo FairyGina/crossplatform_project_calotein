@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 import 'package:calotin/eat_list.dart';
 import 'package:calotin/food_add.dart';
@@ -17,16 +15,11 @@ Future<void> main() async {
   // if(await databaseExists(dbpath)) {
   //   await deleteDatabase(dbpath);
   // } //db 삭제(처음부터 존재하면)
-
+  //
   // String dbpath = join(await getDatabasesPath(), 'eat.db');
   // if(await databaseExists(dbpath)) {
   //   await deleteDatabase(dbpath);
   // } //db 삭제(처음부터 존재하면)
-
-  String dbpath = join(await getDatabasesPath(), 'user_info.db');
-  if(await databaseExists(dbpath)) {
-    await deleteDatabase(dbpath);
-  } //db 삭제(처음부터 존재하면)
 
   runApp(foodPage());
 }
@@ -59,12 +52,12 @@ class foodPageState extends State<_foodPage> {
   void initState() {
     super.initState();
 
-    eatdb?.initDB();
-    fooddb?.createFood().then((value) {
-      setState(() {
-        // datalist = fooddb!.getFood(); //화면에 리스트 띄워두는 건데 필요없으면 나중에 지울 것
-      });
-    }); //데이터베이스 생성하는 거 나중에 다 메인으로 옮길 것
+    // eatdb?.initDB();
+    // fooddb?.createFood().then((value) {
+    //   setState(() {
+    //     datalist = fooddb!.getFood(); //화면에 리스트 띄워두는 건데 필요없으면 나중에 지울 것
+    //   });
+    // }); //데이터베이스 생성하는 거 나중에 다 메인으로 옮길 것
   }
 
   @override

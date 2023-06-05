@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 Future<void> main() async {
 
   runApp(user_info());
+
+  // String dbpath = join(await getDatabasesPath(), 'user_info.db');
+  // if(await databaseExists(dbpath)) {
+  //   await deleteDatabase(dbpath);
+  // } //db 삭제(처음부터 존재하면)
 }
 
 class user_info extends StatefulWidget {
@@ -79,6 +84,7 @@ class _user_info extends State<user_info> {
         title: Text('사용자 정보 입력창'),
         backgroundColor: Color(0xff69DFCB),
       ),
+      backgroundColor: Colors.white, // 하얀색 배경 설정
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -178,18 +184,6 @@ class _user_info extends State<user_info> {
 
 
 
-                // Container(
-                //   padding: EdgeInsets.all(3.0),
-                //   child: TextField(
-                //     decoration: InputDecoration(
-                //       border: OutlineInputBorder(),
-                //       labelText: '성별',
-                //     ),
-                //     controller: gender,
-                //   ),
-                // ),
-
-
 
                 Container(
                   padding: EdgeInsets.all(3.0),
@@ -237,20 +231,6 @@ class _user_info extends State<user_info> {
 
 
 
-
-                // Container(
-                //   padding: EdgeInsets.all(3.0),
-                //   child: TextField(
-                //     decoration: InputDecoration(
-                //       border: OutlineInputBorder(),
-                //       labelText: '활동량',
-                //     ),
-                //     controller: activity,
-                //   ),
-                // ),
-
-
-
                 Container(
                   padding: EdgeInsets.all(3.0),
                   child: TextField(
@@ -289,18 +269,24 @@ class _user_info extends State<user_info> {
 
                       String genderValue = (_genderradioValue == 0) ? '여자' : '남자'; //여자 남자 선택
 
-                      String selectActivityValue='0';
+                      String selectActivityValue='1.2';
+                      String selectActivityProteinValue='1.0';
                       //List<String> activityDropdownList = ['아예 없음','1~2번','3~4번','5~6','매일'];
                       if(_selectedActivity=='아예 없음') {
-                        selectActivityValue='0';
+                        selectActivityValue='1.2';
+                        selectActivityProteinValue='1.0';
                       } else if(_selectedActivity=='1~2번') {
-                        selectActivityValue='1';
+                        selectActivityValue='1.375';
+                        selectActivityProteinValue='1.25';
                       } else if(_selectedActivity=='3~4번') {
-                        selectActivityValue='2';
+                        selectActivityValue='1.55';
+                        selectActivityProteinValue='1.5';
                       } else if(_selectedActivity=='5~6번') {
-                        selectActivityValue='3';
+                        selectActivityValue='1.725';
+                        selectActivityProteinValue='1.75';
                       } else if(_selectedActivity=='매일') {
-                        selectActivityValue='4';
+                        selectActivityValue='1.9';
+                        selectActivityProteinValue='2.0';
                       }
 
 
@@ -315,7 +301,9 @@ class _user_info extends State<user_info> {
 
                         cm: cm.text,
                         kg: kg.text,
+
                         activity: selectActivityValue, // 선택된 활동량 값 사용
+                        multiActivityProtein: selectActivityProteinValue,
 
                         goal: goal.text,
 
