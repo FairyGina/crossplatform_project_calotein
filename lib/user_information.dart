@@ -1,9 +1,14 @@
+import 'package:calotin/main.dart';
+
 import 'class_user_information.dart';
 import 'db_user_information.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:flutter/material.dart';
+
+import 'eat_db.dart';
+import 'food_db.dart';
 Future<void> main() async {
 
   runApp(user_info());
@@ -23,7 +28,9 @@ class user_info extends StatefulWidget {
 
 class _user_info extends State<user_info> {
   final formKey = GlobalKey<FormState>();
-  db_user_information? db_user_info = db_user_information();
+  db_user_information db_user_info = db_user_information();
+  foodDatabase? fooddb = foodDatabase();
+  eatDatabase? eatdb = eatDatabase();
 
   final year = TextEditingController();
   final month = TextEditingController();
@@ -68,6 +75,9 @@ class _user_info extends State<user_info> {
   @override
   void initState() {
     super.initState();
+    eatdb?.initDB();
+    fooddb?.createFood();
+    db_user_info.initDB();
     setState(() {
       activityDropdownValue = activityDropdownList[0];
     });
@@ -309,7 +319,10 @@ class _user_info extends State<user_info> {
 
                       );
                       await db_user_info?.add(user_info);
-                      Navigator.of(context).pop();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyHomePage(title: 'calrotain',titleColor: Color(0xff69DFCB)),
+                          ));
                     },  //입력받은 값들을 데이터베이스에 넣음
                   ),
                 ),

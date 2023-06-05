@@ -9,8 +9,14 @@ import 'package:calotin/eat_db.dart';
 import 'package:calotin/userinfo_modify.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+int? isviewed;
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  isviewed = await prefs.getInt("isviewed");
+  await prefs.setInt("isviewed", 1);
 
   runApp(MyApp());
 }
@@ -28,7 +34,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xff69DFCB), // 배경색을 초록색으로 설정
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'calrotain',titleColor: Color(0xff69DFCB)),
+      initialRoute: isviewed == 0 || isviewed == null ? "first" : "/",
+      routes: {
+        '/': (context) => MyHomePage(title: 'calrotain',titleColor: Color(0xff69DFCB)),
+        'first' : (context) => user_info(),
+      },
     );
   }
 }
@@ -50,23 +60,15 @@ class _MyHomePageState extends State<MyHomePage> {
   eatDatabase? eatdb = eatDatabase();
   user_information? info;
   int year = 0;
-  String activityDropdownValue = '0'; // 수정된 부분
 
   // 데이터 베이스 가져오기
   @override
   void initState() {
     super.initState();
     year = DateTime.now().year;
-    eatdb?.initDB();
-    fooddb?.createFood();
-    db_user_info.initDB().then((value) {
-      db_user_info.getUserInfo().then((fetchedInfo) {
-        setState(() {
-          info = fetchedInfo;
-          if (info != null) {
-            activityDropdownValue = info!.getActivity() ?? '0';
-          }
-        });
+    db_user_info.getUserInfo().then((fetchedInfo) {
+      setState(() {
+        info = fetchedInfo;
       });
     });
   }
@@ -166,9 +168,6 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () async {
                 _scaffoldKey.currentState?.openEndDrawer();
                 info = (await db_user_info.getUserInfo())!;
-                if (info != null) {
-                  activityDropdownValue = info!.getActivity() ?? '0';
-                }
               },
             ),
           ],
@@ -374,19 +373,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬을 위해 추가
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    if (activityDropdownValue == '0') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => user_info()),
-                      );
-                    } else {
-                      // 다른 동작 수행
-                    }
-                  },
-                  child: Text('첫 번째 버튼'),
-                ),
+
                 SizedBox(width: 16), // 버튼 사이에 간격을 주기 위해 추가
                 ElevatedButton(
                   onPressed: () {
