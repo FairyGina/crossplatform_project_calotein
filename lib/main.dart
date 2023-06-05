@@ -3,13 +3,29 @@ import 'package:calotin/user_information.dart';
 import 'package:flutter/material.dart';
 import 'package:calotin/food.dart';
 import 'package:calotin/db_user_information.dart';
-import 'package:calotin/class_user_information.dart';
 import 'package:calotin/food_db.dart';
 import 'package:calotin/eat_db.dart';
 import 'package:calotin/userinfo_modify.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'food_class.dart';
+
+
+
+
+
+// late Future<double> proteinValue;
+eatDatabase? eatdb = eatDatabase();
+
+class ProteinValueNotifier extends ChangeNotifier {
+  Future<double> proteinValue = eatdb!.getTotalProtein();
+
+  notifyListeners(); // Notify listeners when the value changes
+
+}
+final proteinValueNotifier = ProteinValueNotifier();
 
 int? isviewed;
 Future<void> main() async {
@@ -36,7 +52,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: isviewed == 0 || isviewed == null ? "first" : "/",
       routes: {
-        '/': (context) => MyHomePage(title: 'calrotain',titleColor: Color(0xff69DFCB)),
+        '/': (context) => MyHomePage(title: 'calotein',titleColor: Color(0xff69DFCB)),
         'first' : (context) => user_info(),
       },
     );
@@ -60,15 +76,20 @@ class _MyHomePageState extends State<MyHomePage> {
   eatDatabase? eatdb = eatDatabase();
   user_information? info;
   int year = 0;
+  Future<List<Food>>? eatList;
+  // late Future<double> proteinValue;
+
 
   // 데이터 베이스 가져오기
   @override
   void initState() {
     super.initState();
     year = DateTime.now().year;
+    eatList = eatdb?.getCurrentDayEat();
     db_user_info.getUserInfo().then((fetchedInfo) {
       setState(() {
         info = fetchedInfo;
+        proteinValueNotifier.proteinValue = eatdb!.getTotalProtein();
       });
     });
   }
@@ -123,19 +144,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  Future<double> getTotalProtein() async {
-    double totalProtein = 0;
-    Database database = await openDatabase(
-      join(await getDatabasesPath(), 'eat.db'),
-    );
-    List<Map<String, dynamic>> result = await database.rawQuery('SELECT SUM(protein) FROM eat');
-
-    if (result.isNotEmpty && result[0]['SUM(protein)'] != null) {
-      totalProtein = result[0]['SUM(protein)'] as double;
-    }
-
-    return totalProtein;
-  }
+  // Future<double> getTotalProtein() async {
+  //   double totalProtein = 0;
+  //   Database database = await openDatabase(
+  //     join(await getDatabasesPath(), 'eat.db'),
+  //   );
+  //   List<Map<String, dynamic>> result = await database.rawQuery('SELECT SUM(protein) FROM eat');
+  //
+  //   if (result.isNotEmpty && result[0]['SUM(protein)'] != null) {
+  //     totalProtein = result[0]['SUM(protein)'] as double;
+  //   }
+  //
+  //   return totalProtein;
+  // }
 
 
 
@@ -326,7 +347,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
           FutureBuilder<double>(
-            future: getTotalProtein(),
+            future: proteinValueNotifier.proteinValue,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {

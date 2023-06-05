@@ -86,6 +86,30 @@ class eatDatabase {
     }).toList();
   } //현재 날짜의 데이터만 받아오는 거
 
+  Future<double> getTotalProtein() async {
+    final db = await database;
+    final DateTime now = DateTime.now();  //여기서는 now만 써도 로컬 시간으로 잘 받아옴
+    DateTime currentDay;
+
+    if (now.hour >= 3) {
+      currentDay = DateTime(now.year, now.month, now.day);
+    } else {
+      currentDay = DateTime(now.year, now.month, now.day - 1);
+    } //3시를 기준으로 현재 날짜를 정함
+
+    final DateTime startTime = DateTime(currentDay.year, currentDay.month, currentDay.day, 3);  //현재 날짜의 새벽 3시 받아오기
+    final DateTime endTime = startTime.add(Duration(days: 1));  //다음날까지
+    double totalProtein = 0;
+
+    List<Map<String, dynamic>> result = await db!.rawQuery('SELECT SUM(protein) FROM eat WHERE date >= ? AND date < ?', [startTime.toString(), endTime.toString()]);
+
+    if (result.isNotEmpty && result[0]['SUM(protein)'] != null) {
+      totalProtein = result[0]['SUM(protein)'] as double;
+    }
+
+    return totalProtein;
+  }
+
 // Future<List<Food>> getEat() async {
 //   final db = await database;
 //   final List<Map<String, dynamic>>? maps = await db?.query('eat');

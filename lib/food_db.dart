@@ -100,5 +100,7 @@ class foodDatabase {
       );
     }).toList();
   } //받아온 문자열을 포함한 데이터만 가져오는 것
+
+
 }
 
