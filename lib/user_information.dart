@@ -2,21 +2,31 @@ import 'package:calotin/main.dart';
 
 import 'class_user_information.dart';
 import 'db_user_information.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'package:flutter/material.dart';
 
 import 'eat_db.dart';
 import 'food_db.dart';
+Future<void> main() async {
 
+  runApp(user_info());
+
+  // String dbpath = join(await getDatabasesPath(), 'user_info.db');
+  // if(await databaseExists(dbpath)) {
+  //   await deleteDatabase(dbpath);
+  // } //db 삭제(처음부터 존재하면)
+}
 
 class user_info extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return user_state();
+    return _user_info();
   }
 }
 
-class user_state extends State<user_info> {
+class _user_info extends State<user_info> {
   final formKey = GlobalKey<FormState>();
   db_user_information db_user_info = db_user_information();
   foodDatabase? fooddb = foodDatabase();
@@ -25,12 +35,17 @@ class user_state extends State<user_info> {
   final year = TextEditingController();
   final month = TextEditingController();
   final day = TextEditingController();
+
   final gender = TextEditingController();
+
   final cm = TextEditingController();
   final kg = TextEditingController();
   final activity = TextEditingController();
+
   final goal = TextEditingController();
+
   //입력받은 값들을 저장하기 위한 변수
+
 
   //라디오 버튼 값
   int? _genderradioValue; // 라디오 버튼 값 상태 변수
@@ -40,6 +55,8 @@ class user_state extends State<user_info> {
       _genderradioValue = value; // 선택된 라디오 버튼 값 갱신
     });
   }
+
+
 
   //활동량 정보
   String? _selectedActivity; // 활동량 드롭다운 값 상태 변수
@@ -51,21 +68,24 @@ class user_state extends State<user_info> {
     });
   }
 
+
   List<String> activityDropdownList = ['아예 없음','1~2번','3~4번','5~6번','매일'];
   String activityDropdownValue = '0';
 
   @override
   void initState() {
     super.initState();
-    super.initState();
     eatdb?.initDB();
     fooddb?.createFood();
-    db_user_info.initDB().then((value) {
-      setState(() {
-        activityDropdownValue = activityDropdownList[0];
-      });
+    db_user_info.initDB();
+    setState(() {
+      activityDropdownValue = activityDropdownList[0];
     });
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +94,7 @@ class user_state extends State<user_info> {
         title: Text('사용자 정보 입력창'),
         backgroundColor: Color(0xff69DFCB),
       ),
+      backgroundColor: Colors.white, // 하얀색 배경 설정
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -120,6 +141,7 @@ class user_state extends State<user_info> {
                     ),
                   ],
                 ),
+
                 Row(
                   children: <Widget>[
                     Padding(
@@ -129,24 +151,6 @@ class user_state extends State<user_info> {
                         style: TextStyle(
                           fontSize: 16,
                         ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        children: [
-                          Radio(
-                            value: 0,
-                            groupValue: _genderradioValue,
-                            onChanged: _radiochange,
-                          ),
-                          Text(
-                            '여자',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                     Container(
@@ -167,8 +171,29 @@ class user_state extends State<user_info> {
                         ],
                       ),
                     ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        children: [
+                          Radio(
+                            value: 0,
+                            groupValue: _genderradioValue,
+                            onChanged: _radiochange,
+                          ),
+                          Text(
+                            '여자',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
+
+
+
 
                 Container(
                   padding: EdgeInsets.all(3.0),
@@ -213,6 +238,9 @@ class user_state extends State<user_info> {
                   ),
                 ),
 
+
+
+
                 Container(
                   padding: EdgeInsets.all(3.0),
                   child: TextField(
@@ -223,6 +251,7 @@ class user_state extends State<user_info> {
                     controller: goal,
                   ),
                 ),
+
 
                 Container(
                   padding: EdgeInsets.all(3.0),
@@ -247,21 +276,30 @@ class user_state extends State<user_info> {
                       ),
                     ),
                     onPressed: () async {
+
                       String genderValue = (_genderradioValue == 0) ? '여자' : '남자'; //여자 남자 선택
 
-                      String selectActivityValue='0';
+                      String selectActivityValue='1.2';
+                      String selectActivityProteinValue='1.0';
                       //List<String> activityDropdownList = ['아예 없음','1~2번','3~4번','5~6','매일'];
                       if(_selectedActivity=='아예 없음') {
-                        selectActivityValue='0';
+                        selectActivityValue='1.2';
+                        selectActivityProteinValue='1.0';
                       } else if(_selectedActivity=='1~2번') {
-                        selectActivityValue='1';
+                        selectActivityValue='1.375';
+                        selectActivityProteinValue='1.25';
                       } else if(_selectedActivity=='3~4번') {
-                        selectActivityValue='2';
+                        selectActivityValue='1.55';
+                        selectActivityProteinValue='1.5';
                       } else if(_selectedActivity=='5~6번') {
-                        selectActivityValue='3';
+                        selectActivityValue='1.725';
+                        selectActivityProteinValue='1.75';
                       } else if(_selectedActivity=='매일') {
-                        selectActivityValue='4';
+                        selectActivityValue='1.9';
+                        selectActivityProteinValue='2.0';
                       }
+
+
 
                       // _genderradioValue를 '여자' 또는 '남자'로 변환하여 저장
                       user_information user_info = user_information(
@@ -273,23 +311,28 @@ class user_state extends State<user_info> {
 
                         cm: cm.text,
                         kg: kg.text,
+
                         activity: selectActivityValue, // 선택된 활동량 값 사용
+                        multiActivityProtein: selectActivityProteinValue,
 
                         goal: goal.text,
 
                       );
                       await db_user_info?.add(user_info);
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => MyHomePage())
-                      );
+                          MaterialPageRoute(builder: (context) => MyHomePage(title: 'calrotain',titleColor: Color(0xff69DFCB)),
+                          ));
                     },  //입력받은 값들을 데이터베이스에 넣음
                   ),
                 ),
               ],
+
             ),
           ),
+
         ),
+
       ),
     );
   }

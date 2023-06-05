@@ -33,13 +33,19 @@ class db_user_information {
     String sql = '''
     CREATE TABLE IF NOT EXISTS user_info(
       user_no INTEGER PRIMARY KEY AUTOINCREMENT,
+      
       year INT NOT NULL,
       month INT NOT NULL,
       day INT NOT NULL,
+      
       gender TEXT NOT NULL,
+      
       cm DOUBLE NOT NULL,
       kg DOUBLE NOT NULL,
+      
       activity TEXT NOT NULL,
+      multiActivityProtein DOUBLE NOT NULL,
+      
       goal TEXT
     )  
     ''';
@@ -59,7 +65,9 @@ class db_user_information {
 
       'cm': user.cm,
       'kg': user.kg,
+
       'activity': user.activity,
+      'multiActivityProtein': user.multiActivityProtein,
 
       'goal': user.goal,
 

@@ -6,6 +6,8 @@ import 'dart:convert';
 
 import 'package:calotin/food_class.dart';
 
+
+
 class foodDatabase {
   Database? _database;
 
@@ -98,5 +100,7 @@ class foodDatabase {
       );
     }).toList();
   } //받아온 문자열을 포함한 데이터만 가져오는 것
+
+
 }
 
