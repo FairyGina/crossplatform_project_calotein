@@ -13,10 +13,10 @@ class user_nutrient{
 
   factory user_nutrient.fromMap(Map<String, dynamic> map){
     return user_nutrient(
-      eatKcal: map['먹은 칼로리'].toString(),
-      eatProtein: map['먹은 단백질'].toString(),
-      eatCarbohydrate: map['먹은 탄수화물'].toString(),
-      eatFat: map['먹은 지방'].toString(),
+      eatKcal: map['eatKcal'].toString(),
+      eatProtein: map['eatProtein'].toString(),
+      eatCarbohydrate: map['eatCarbohydrate'].toString(),
+      eatFat: map['eatFat'].toString(),
     );
   }
 

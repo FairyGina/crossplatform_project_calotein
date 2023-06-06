@@ -34,8 +34,9 @@ class db_user_nutrient {
   Future _onCreate(Database db, int version) async {
     String sql = '''
     CREATE TABLE IF NOT EXISTS user_nutr(
-      day INTEGER PRIMARY KEY AUTOINCREMENT,
+      day_no INTEGER PRIMARY KEY AUTOINCREMENT,
       
+      date TEXT DEFAULT (datetime('now', 'localtime')) NOT NULL,
       eatKcal DOUBLE NOT NULL,
       eatProtein DOUBLE NOT NULL,
       eatCarbohydrate DOUBLE NOT NULL,
