@@ -75,6 +75,15 @@ class _MyHomePageState extends State<MyHomePage> {
   int year = 0;
   Future<List<Food>>? eatList;
 
+
+  //데이터 저장 전역변수
+  double totalKcalData=0;
+  double totalProteinData=0;
+  double totalCarbohydrateData=0;
+  double totalFatData=0;
+
+
+
   // 데이터 베이스 가져오기
   @override
   void initState() {
@@ -154,7 +163,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-  List<BarChartGroupData> getData() {
+  List<BarChartGroupData> getData(double g) {
+    print(g);
+    if(g>100) g=100;
     return [
       BarChartGroupData(
         x: 0,
@@ -162,8 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
           BarChartRodData(
             fromY: 0,
             color: Color(0xff69DFCB),
-            toY: 50, // 막대 색상 지정
-            width: 15, // 막대 선 두께
+            toY: g, // 막대 색상 지정
+            width: 8, // 막대 선 두께
           ),
         ],
       ),
@@ -433,16 +444,52 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(4.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
                   Container(
                     padding: const EdgeInsets.all(4.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-
-
                       children: [
+                        Container(
+                          child: Transform.rotate(
+                            angle: 90 * 3.1415926535 / 180, // 90도를 라디안 값으로 변환하여 -90도로 회전
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Container(
+                                height: 50, // 그래프의 높이 조정
+                                width: 10,
+                                padding: EdgeInsets.all(4),
+                                child: BarChart(
+                                  BarChartData(
+                                    alignment: BarChartAlignment.center,
+                                    groupsSpace: 0,
+                                    maxY: 100,
+                                    barGroups: getData(totalCarbohydrateData),
+                                    backgroundColor: Colors.white, // 배경색 지정
+                                    borderData: FlBorderData(
+                                      show: false, // 바깥 그래프 테두리 제거
+                                    ),
+                                    titlesData: FlTitlesData(
+                                      show: false,
+                                    ),
+                                    gridData: FlGridData(
+                                      show: false, // 점선 제거
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
 
                         Text(
                           '탄수화물',
@@ -452,7 +499,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
 
-                       SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
+
 
                         StreamBuilder<double>(
                           stream: eatdb!.getTotalCarbohydrateStream(),
@@ -468,6 +515,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             double _totalCarbohydrate = snapshot.data ?? 0;
                             String totalCarbohydrate = _totalCarbohydrate.toStringAsFixed(0);
 
+                            double result=_totalCarbohydrate/double.parse(_needCarbohydrateText())* 100;
+                            if(result>100) result = 100;
+                            totalCarbohydrateData = result;
+
                             return Text(
                               '${totalCarbohydrate} / ${_needCarbohydrateText()} g  \n',
                               style: TextStyle(fontSize: 16, color: Colors.white),
@@ -477,39 +528,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         // SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
-                        Transform.rotate(
-                          angle: 90 * 3.1415926535 / 180, // 90도를 라디안 값으로 변환하여 -90도로 회전
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Container(
-                              height: 50, // 그래프의 높이 조정
-                              width: 20,
-                              padding: EdgeInsets.all(4),
-                              child: BarChart(
-                                BarChartData(
-                                  barGroups: getData(),
-                                  backgroundColor: Colors.white, // 배경색 지정
-                                  borderData: FlBorderData(
-                                    show: false, // 바깥 그래프 테두리 제거
-                                  ),
-                                  titlesData: FlTitlesData(
-                                    show: false,
-                                  ),
-                                  gridData: FlGridData(
-                                    show: false, // 점선 제거
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+
 
 
 
@@ -537,6 +556,46 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.start,
 
                       children: [
+
+                        Container(
+                          child: Transform.rotate(
+                            angle: 90 * 3.1415926535 / 180, // 90도를 라디안 값으로 변환하여 -90도로 회전
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Container(
+                                height: 50, // 그래프의 높이 조정
+                                width: 10,
+                                padding: EdgeInsets.all(4),
+                                child: BarChart(
+                                  BarChartData(
+                                    alignment: BarChartAlignment.center,
+                                    groupsSpace: 0,
+                                    maxY: 100,
+                                    barGroups: getData(totalProteinData),
+                                    backgroundColor: Colors.white, // 배경색 지정
+                                    borderData: FlBorderData(
+                                      show: false, // 바깥 그래프 테두리 제거
+                                    ),
+                                    titlesData: FlTitlesData(
+                                      show: false,
+                                    ),
+                                    gridData: FlGridData(
+                                      show: false, // 점선 제거
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
                         Text(
                           '단백질',
                           style: TextStyle(
@@ -545,17 +604,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
 
-                        SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
-                        Text(
-                          '그래프',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
 
-                        SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
+                        // SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
                         StreamBuilder<double>(
                           stream: eatdb!.getTotalProteinStream(),
@@ -569,6 +620,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             }
 
                             double _totalProtein = snapshot.data ?? 0;
+
+                            double result=_totalProtein/double.parse(_needProteinText())* 100;
+                            if(result>100) result = 100;
+                            totalProteinData = result;
+
                             String totalProtein = _totalProtein.toStringAsFixed(0);
 
                             return Text(
@@ -579,7 +635,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
 
 
-                        SizedBox(height: 8.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
                       ],
                     ),
@@ -587,7 +642,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
                   Container(
-                    width: 20.0, // 간격을 조정하기 위한 Container
+                    width: 32.0, // 간격을 조정하기 위한 Container
                   ),
 
 
@@ -602,6 +657,49 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.start,
 
                       children: [
+
+
+                        Container(
+                          child: Transform.rotate(
+                            angle: 90 * 3.1415926535 / 180, // 90도를 라디안 값으로 변환하여 -90도로 회전
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Container(
+                                height: 50, // 그래프의 높이 조정
+                                width: 10,
+                                padding: EdgeInsets.all(4),
+                                child: BarChart(
+                                  BarChartData(
+                                    alignment: BarChartAlignment.center,
+                                    groupsSpace: 0,
+                                    maxY: 100,
+                                    barGroups: getData(totalFatData),
+                                    backgroundColor: Colors.white, // 배경색 지정
+                                    borderData: FlBorderData(
+                                      show: false, // 바깥 그래프 테두리 제거
+                                    ),
+                                    titlesData: FlTitlesData(
+                                      show: false,
+                                    ),
+                                    gridData: FlGridData(
+                                      show: false, // 점선 제거
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+
                         Text(
                           '지방',
                           style: TextStyle(
@@ -610,17 +708,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
 
-                        SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
-                        Text(
-                          '그래프',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-
-                        SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
                         StreamBuilder<double>(
                           stream: eatdb!.getTotalFatStream(),
@@ -634,6 +722,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             }
 
                             double _totalFat = snapshot.data ?? 0;
+
+                            double result=_totalFat/double.parse(_needFatText())* 100;
+                            if(result>100) result = 100;
+                            totalFatData = result;
+
                             String totalFat = _totalFat.toStringAsFixed(0);
 
                             return Text(
@@ -644,7 +737,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
 
 
-                        SizedBox(height: 8.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
                       ],
                     ),
@@ -683,7 +775,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
 
                       double _totalkcal = snapshot.data ?? 0;
-                      double result=double.parse(_needKcalText()!)-_totalkcal;
+                      double result=double.parse(_needKcalText())-_totalkcal;
                       if(result<0) result = 0;
                       String totalkcal = result.toStringAsFixed(0);
 
@@ -710,7 +802,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         }
 
                         double _totalCarbohydrate = snapshot.data ?? 0;
-                        double result=_totalCarbohydrate/double.parse(_needCarbohydrateText())! * 100;
+                        double result=_totalCarbohydrate/double.parse(_needCarbohydrateText())* 100;
                         if(result>100) result = 100;
                         String totalCarbohydrate = result.toStringAsFixed(0);
 
@@ -736,7 +828,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         }
 
                         double _totalProtein = snapshot.data ?? 0;
-                        double result=_totalProtein/double.parse(_needProteinText())! * 100;
+                        double result=_totalProtein/double.parse(_needProteinText())* 100;
                         if(result>100) result = 100;
                         String totalProtein = result.toStringAsFixed(0);
 
@@ -761,7 +853,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         }
 
                         double _totalFat = snapshot.data ?? 0;
-                        double result=_totalFat/double.parse(_needFatText())! * 100;
+                        double result=_totalFat/double.parse(_needFatText())* 100;
                         if(result>100) result = 100;
                         String totalFat = result.toStringAsFixed(0);
 
