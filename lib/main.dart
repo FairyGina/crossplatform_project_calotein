@@ -50,7 +50,10 @@ class MyApp extends StatelessWidget {
         'first' : (context) => user_info(),
       },
     );
+
+
   }
+
 }
 
 class MyHomePage extends StatefulWidget {
@@ -151,7 +154,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-
+  List<BarChartGroupData> getData() {
+    return [
+      BarChartGroupData(
+        x: 0,
+        barRods: [
+          BarChartRodData(
+            fromY: 0,
+            color: Color(0xff69DFCB),
+            toY: 50, // 막대 색상 지정
+            width: 15, // 막대 선 두께
+          ),
+        ],
+      ),
+    ];
+  }
 
 
 
@@ -161,6 +178,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+
+
+
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
@@ -422,6 +443,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
                       children: [
+
                         Text(
                           '탄수화물',
                           style: TextStyle(
@@ -430,11 +452,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
 
-                        SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
-
-                        //그래프
-
-                        SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
+                       SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
                         StreamBuilder<double>(
                           stream: eatdb!.getTotalCarbohydrateStream(),
@@ -457,15 +475,56 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         ),
 
+                        // SizedBox(height: 4.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
-                        SizedBox(height: 8.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
+                        Transform.rotate(
+                          angle: 90 * 3.1415926535 / 180, // 90도를 라디안 값으로 변환하여 -90도로 회전
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Container(
+                              height: 50, // 그래프의 높이 조정
+                              width: 20,
+                              padding: EdgeInsets.all(4),
+                              child: BarChart(
+                                BarChartData(
+                                  barGroups: getData(),
+                                  backgroundColor: Colors.white, // 배경색 지정
+                                  borderData: FlBorderData(
+                                    show: false, // 바깥 그래프 테두리 제거
+                                  ),
+                                  titlesData: FlTitlesData(
+                                    show: false,
+                                  ),
+                                  gridData: FlGridData(
+                                    show: false, // 점선 제거
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+
+
+
+
+
+                        // SizedBox(height: 8.0), // 위젯 사이의 간격을 조정하기 위한 SizedBox 추가
 
                       ],
                     ),
                   ),
 
                   Container(
-                    width: 8.0, // 간격을 조정하기 위한 Container
+                    width: 32.0, // 간격을 조정하기 위한 Container
                   ),
 
 

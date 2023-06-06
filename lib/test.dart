@@ -5,6 +5,10 @@ import 'dart:async';
 import 'dart:math';
 
 
+
+
+
+
 class BarChartExample extends StatefulWidget {
   @override
   _BarChartExampleState createState() => _BarChartExampleState();
@@ -25,23 +29,23 @@ class _BarChartExampleState extends State<BarChartExample> {
         BarChartData(
           barGroups: getData(),
           borderData: FlBorderData(
-            show: true,
+            show: true, // 바깥 그래프 테두리 제거
             border: Border(
               left: BorderSide(color: Colors.black, width: 2), // 왼쪽 테두리 스타일 지정
               bottom: BorderSide(color: Colors.black, width: 2), // 하단 테두리 스타일 지정
             ),
           ),
+          titlesData: FlTitlesData(
+            show: true,
+          ),
           gridData: FlGridData(
             show: false, // 점선 제거
-          ),
-          titlesData: FlTitlesData(
-            rightTitles: SideTitles(
-            ),
           ),
         ),
       ),
     );
   }
+
 
   List<BarChartGroupData> getData() {
     List<BarChartGroupData> barGroups = [];
