@@ -4,6 +4,8 @@ import 'package:path/path.dart';
 import 'package:calotin/food_class.dart';
 import 'package:calotin/class_user_nutrient.dart';
 
+import 'main.dart';
+
 class eatDatabase {
   Database? _database;
 
