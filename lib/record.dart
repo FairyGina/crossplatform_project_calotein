@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'eat_db.dart';
 import 'class_user_nutrient.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class record extends StatelessWidget {
   @override
@@ -30,28 +29,6 @@ class recordState extends State<_record> {
 
   Future<List<user_nutrient>>? nutri_list;
   Future<List<user_nutrient>>? nutri_list2;
-
-
-
-
-  List<BarChartGroupData> getData() {
-    return [
-      BarChartGroupData(
-
-        x: 0,
-        barRods: [
-          BarChartRodData(
-            fromY: 0,
-            color: Color(0xff69DFCB),
-            toY: 50, // 막대 색상 지정
-            width: 20, // 막대 선 두께
-          ),
-        ],
-      ),
-    ];
-  }
-
-
 
   @override
   void initState() {
