@@ -52,6 +52,7 @@ class _BarChartExampleState extends State<BarChartExample> {
                 padding: EdgeInsets.all(8),
                 child: BarChart(
                   BarChartData(
+                    maxY: 100,
                     barGroups: getData(),
                     backgroundColor: Colors.white, // 배경색 지정
                     borderData: FlBorderData(
