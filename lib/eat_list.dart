@@ -107,7 +107,7 @@ class _eatState extends State<_eatPage> {
                                                         padding: EdgeInsets.all(10.0),
                                                         alignment: Alignment.centerRight,
                                                         child: Text(
-                                                          "${food.calorie!.toString() ?? ''} Kcal",
+                                                          "${food.calorie!.toString()} Kcal",
                                                           style: TextStyle(
                                                             fontSize: 16,
                                                           ),
@@ -121,15 +121,15 @@ class _eatState extends State<_eatPage> {
                                                 children: <Widget>[
                                                   Container(
                                                     padding: EdgeInsets.only(bottom: 2.0, right: 2.0),
-                                                    child: Text("탄수화물: ${food.carbohydrate!.toString() ?? ''} g /"),
+                                                    child: Text("탄수화물: ${food.carbohydrate!.toString()} g /"),
                                                   ),
                                                   Container(
                                                     padding: EdgeInsets.only(bottom: 2.0, right: 2.0),
-                                                    child: Text("단백질: ${food.protein!.toString() ?? ''} g /"),
+                                                    child: Text("단백질: ${food.protein!.toString()} g /"),
                                                   ),
                                                   Container(
                                                     padding: EdgeInsets.only(bottom: 2.0),
-                                                    child: Text("지방: ${food.fat!.toString() ?? ''} g"),
+                                                    child: Text("지방: ${food.fat!.toString()} g"),
                                                   ),
                                                 ],
                                               ),
