@@ -321,8 +321,8 @@ class _user_info extends State<user_info> {
                       await db_user_info?.add(user_info);
                       Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => MyHomePage(title: 'calrotain',titleColor: Color(0xff69DFCB)),
-                          ));
+                          MaterialPageRoute(builder: (context) => MyHomePage(title: 'calotein',titleColor: Color(0xff69DFCB),
+                          )));
                     },  //입력받은 값들을 데이터베이스에 넣음
                   ),
                 ),
