@@ -15,8 +15,6 @@ void main() {
 }
 
 class Record extends StatelessWidget {
-  const Record({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -114,12 +112,10 @@ class RecordState extends State<_Record> {
 
 
 
-
   Color getColor(int j) {
     Color barColor = Colors.black;
-    if(j==0) {
-      barColor = Colors.red;
-    } else if(j==1) barColor = Colors.grey;
+    if(j==0) barColor = Colors.red;
+    else if(j==1) barColor = Colors.grey;
     else if(j==2) barColor = Colors.blue;
     else if(j==3) barColor = Colors.yellow;
 
@@ -130,11 +126,10 @@ class RecordState extends State<_Record> {
 
   List<List<double>> DataList = [
     [0, 0, 0, 0, 0],
-    [10, 25, 35, 45, 55],
-    [20, 30, 40, 50, 60],
-    [30, 35, 45, 55, 65],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
   ];
-
 
 
 
@@ -144,16 +139,26 @@ class RecordState extends State<_Record> {
     for (int i = 0; i < 5; i++) {
       List<BarChartRodData> barRods = [];
 
-
       for (int j = 0; j < 4; j++) {
-        barRods.add(
-          BarChartRodData(
-            fromY:0,
-            toY: DataList[j][i],
-            color: getColor(j),
-            width: 10,
-          ),
-        );
+        if (DataList[j][i] == 0) {
+          barRods.add(
+            BarChartRodData(
+              fromY: 0,
+              toY: 100, // 데이터가 0인 경우 fetchData()로 데이터 로드
+              color: getColor(j),
+              width: 10,
+            ),
+          );
+        } else {
+          barRods.add(
+            BarChartRodData(
+              fromY: 0,
+              toY: DataList[j][i],
+              color: getColor(j),
+              width: 10,
+            ),
+          );
+        }
       }
 
       barGroups.add(
@@ -169,6 +174,39 @@ class RecordState extends State<_Record> {
   }
 
 
+
+  // List<BarChartGroupData> getGroupedBarData() {
+  //   List<BarChartGroupData> barGroups = [];
+  //
+  //   for (int i = 0; i < 5; i++) {
+  //     List<BarChartRodData> barRods = [];
+  //
+  //
+  //     for (int j = 0; j < 4; j++) {
+  //
+  //
+  //         barRods.add(
+  //             BarChartRodData(
+  //               fromY:0,
+  //               toY: DataList[j][i],
+  //               color: getColor(j),
+  //               width: 10,
+  //             )
+  //         );
+  //
+  //     }
+  //
+  //     barGroups.add(
+  //       BarChartGroupData(
+  //         x: i,
+  //         barRods: barRods,
+  //         showingTooltipIndicators: [0],
+  //       ),
+  //     );
+  //   }
+  //
+  //   return barGroups;
+  // }
 
 
 
@@ -228,7 +266,8 @@ class RecordState extends State<_Record> {
   @override
   Widget build(BuildContext context) {
 
-    // 5일간 칼로리 / 영양성분 평균 변수
+
+
 
 
 
@@ -272,9 +311,9 @@ class RecordState extends State<_Record> {
 
                     // 5일간 칼로리 / 영양성분 퍼센트 계산
                     //칼로리 계산
-                    double tempTotalkcal= eatKcal / double.parse(_needKcalText()) * 100;
-                    if(tempTotalkcal > 100) tempTotalkcal = 100;
-                    percentKcal = tempTotalkcal;
+                    double temp_totalkcal= eatKcal / double.parse(_needKcalText()) * 100;
+                    if(temp_totalkcal > 100) temp_totalkcal = 100;
+                    percentKcal = temp_totalkcal;
 
                     //탄수화물 계산
                     double carbohydrateResult = eatCarbohydrate / double.parse(_needCarbohydrateText()) * 100;
@@ -343,9 +382,9 @@ class RecordState extends State<_Record> {
 
                     // 5일간 칼로리 / 영양성분 퍼센트 계산
                     //칼로리 계산
-                    double tempTotalkcal= eatKcal / double.parse(_needKcalText()) * 100;
-                    if(tempTotalkcal > 100) tempTotalkcal = 100;
-                    percentKcal = tempTotalkcal;
+                    double temp_totalkcal= eatKcal / double.parse(_needKcalText()) * 100;
+                    if(temp_totalkcal > 100) temp_totalkcal = 100;
+                    percentKcal = temp_totalkcal;
 
                     //탄수화물 계산
                     double carbohydrateResult = eatCarbohydrate / double.parse(_needCarbohydrateText()) * 100;
@@ -417,9 +456,9 @@ class RecordState extends State<_Record> {
 
                     // 5일간 칼로리 / 영양성분 퍼센트 계산
                     //칼로리 계산
-                    double tempTotalkcal= eatKcal / double.parse(_needKcalText()) * 100;
-                    if(tempTotalkcal > 100) tempTotalkcal = 100;
-                    percentKcal = tempTotalkcal;
+                    double temp_totalkcal= eatKcal / double.parse(_needKcalText()) * 100;
+                    if(temp_totalkcal > 100) temp_totalkcal = 100;
+                    percentKcal = temp_totalkcal;
 
                     //탄수화물 계산
                     double carbohydrateResult = eatCarbohydrate / double.parse(_needCarbohydrateText()) * 100;
@@ -491,9 +530,9 @@ class RecordState extends State<_Record> {
 
                     // 5일간 칼로리 / 영양성분 퍼센트 계산
                     //칼로리 계산
-                    double tempTotalkcal= eatKcal / double.parse(_needKcalText()) * 100;
-                    if(tempTotalkcal > 100) tempTotalkcal = 100;
-                    percentKcal = tempTotalkcal;
+                    double temp_totalkcal= eatKcal / double.parse(_needKcalText()) * 100;
+                    if(temp_totalkcal > 100) temp_totalkcal = 100;
+                    percentKcal = temp_totalkcal;
 
                     //탄수화물 계산
                     double carbohydrateResult = eatCarbohydrate / double.parse(_needCarbohydrateText()) * 100;
@@ -569,9 +608,9 @@ class RecordState extends State<_Record> {
 
                     // 5일간 칼로리 / 영양성분 퍼센트 계산
                     //칼로리 계산
-                    double tempTotalkcal= eatKcal / double.parse(_needKcalText()) * 100;
-                    if(tempTotalkcal > 100) tempTotalkcal = 100;
-                    percentKcal = tempTotalkcal;
+                    double temp_totalkcal= eatKcal / double.parse(_needKcalText()) * 100;
+                    if(temp_totalkcal > 100) temp_totalkcal = 100;
+                    percentKcal = temp_totalkcal;
 
                     //탄수화물 계산
                     double carbohydrateResult = eatCarbohydrate / double.parse(_needCarbohydrateText()) * 100;
@@ -657,18 +696,6 @@ class RecordState extends State<_Record> {
 
 
 
-            Column(
-              children: [
-                Text(
-                  '추가할 텍스트',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-                // 나머지 코드
-              ],
-            ),
 
 
 
@@ -683,135 +710,81 @@ class RecordState extends State<_Record> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
-                          child: StreamBuilder<List<user_nutrient>>(
-                            stream: Stream.fromFuture(nutriList5!),
-
-
+                          child: FutureBuilder<List<user_nutrient>>(
+                            future: nutriList5!,
                             builder: (context, snapshot) {
-                              // if (_isFirstBuild) {
-                              //   _isFirstBuild = false;
-                              //   return CircularProgressIndicator(); // 첫 번째 실행 때만 로딩 인디케이터 표시
-                              // }
-                              if (snapshot.connectionState == ConnectionState.done) {
-                                if (snapshot.hasError) {
-                                  return Text('오류: ${snapshot.error}');
-                                }
-                                if (snapshot.hasData) {
-                                  DateTime date = DateTime(now.year, now.month, now.day-5, now.hour);
-
-                                  //시작 날짜 받아오기
-                                  startDate = date.toString().substring(0, 10);
-
-
-
-                                  double averageKcal = sumKcal / 5;
-                                  double averageCarbohydrate = sumCarbohydrate / 5;
-                                  double averageProtein = sumProtein / 5;
-                                  double averageFat = sumFat / 5;
-                                  
-
-                                  String formattedKcal = averageKcal.toStringAsFixed(0);
-                                  String formattedProtein = averageCarbohydrate.toStringAsFixed(0);
-                                  String formattedCarbohydrate = averageProtein.toStringAsFixed(0);
-                                  String formattedFat = averageFat.toStringAsFixed(0);
-
-
-
-                                  final String formattedstartDate = startDate.toString().substring(0, 10);
-                                  final String formattedendDate = endDate.toString().substring(0, 10);
-
-
-
-                                  return Center(
-                                    child: Container(
-                                      width: 500.0,
-                                      margin: EdgeInsets.only(bottom: 32.0),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            height: 300, // 그래프의 높이 조정
-                                            child: Padding(
-                                              padding: EdgeInsets.all(16.0),
-                                              child: BarChart(
-                                                BarChartData(
-                                                  maxY: 100,
-                                                  barGroups: getGroupedBarData(),
-                                                  borderData: FlBorderData(
-                                                    show: true,
-                                                    border: Border(
-                                                      left: BorderSide(color: Colors.black, width: 2),
-                                                      bottom: BorderSide(color: Colors.black, width: 2),
-                                                    ),
-                                                  ),
-                                                  titlesData: FlTitlesData(
-                                                    show: false,
-                                                  ),
-                                                  gridData: FlGridData(
-                                                    show: false,
-                                                  ),
-                                                  barTouchData: BarTouchData(
-                                                    enabled: true,
-                                                    touchTooltipData: BarTouchTooltipData(
-                                                      tooltipBgColor: Colors.blueGrey,
-                                                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                                                        return BarTooltipItem(
-                                                          rod.toY.toStringAsFixed(1) + '%',
-                                                          TextStyle(color: Colors.white),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 16.0), // 그래프와 텍스트 사이의 간격
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Colors.black,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius: BorderRadius.circular(16.0),
-                                            ),
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return CircularProgressIndicator(); // 데이터 로딩 중에 표시할 로딩 인디케이터
+                              } else if (snapshot.hasError) {
+                                return Text('오류: ${snapshot.error}');
+                              } else if (snapshot.hasData) {
+                                // 데이터가 준비되었을 때 그래프 그리기
+                                return Center(
+                                  child: Container(
+                                    width: 500.0,
+                                    margin: EdgeInsets.only(bottom: 32.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 300,
+                                          child: Padding(
                                             padding: EdgeInsets.all(16.0),
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  '$formattedstartDate ~ $formattedendDate',
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
+                                            child: BarChart(
+                                              BarChartData(
+                                                maxY: 100,
+                                                barGroups: getGroupedBarData(), // 로드된 데이터로 그래프 그리기
+                                                borderData: FlBorderData(
+                                                  show: true,
+                                                  border: Border(
+                                                    left: BorderSide(color: Colors.black, width: 2),
+                                                    bottom: BorderSide(color: Colors.black, width: 2),
                                                   ),
                                                 ),
-                                                SizedBox(height: 8.0),
-                                                Text(
-                                                  '$formattedKcal kcal\n$formattedProtein g\n$formattedCarbohydrate g\n$formattedFat g',
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.black,
-                                                  ),
-                                                  textAlign: TextAlign.center,
+                                                titlesData: FlTitlesData(
+                                                  show: false,
                                                 ),
-                                              ],
+                                                gridData: FlGridData(
+                                                  show: false,
+                                                ),
+                                                barTouchData: BarTouchData(
+                                                  enabled: true,
+                                                  touchTooltipData: BarTouchTooltipData(
+                                                    tooltipBgColor: Colors.blueGrey,
+                                                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                                                      return BarTooltipItem(
+                                                        rod.toY.toStringAsFixed(1) + '%',
+                                                        TextStyle(color: Colors.white),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(height: 16.0),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.black,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius: BorderRadius.circular(16.0),
+                                          ),
+                                          padding: EdgeInsets.all(16.0),
+                                          child: Column(
+                                            children: [
+                                              // 나머지 코드
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  );
-
-
-
-
-                                }
+                                  ),
+                                );
+                              } else {
+                                return Text('데이터 없음'); // 데이터가 없을 때 표시할 메시지
                               }
-                              // return CircularProgressIndicator();
-                              return Container(
-                                width: 0.0,
-                                height: 0.0,
-                              );
                             },
                           ),
                         ),
@@ -821,6 +794,168 @@ class RecordState extends State<_Record> {
                 ),
               ),
             ),
+
+            // SingleChildScrollView(
+            //   child: Padding(
+            //     padding: EdgeInsets.all(4.0),
+            //     child: ListView(
+            //       shrinkWrap: true,
+            //       children: [
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             Expanded(
+            //               child: StreamBuilder<List<user_nutrient>>(
+            //                 stream: Stream.fromFuture(nutriList5!),
+            //
+            //                 builder: (context, snapshot) {
+            //                   // if (_isFirstBuild) {
+            //                   //   _isFirstBuild = false;
+            //                   //   return CircularProgressIndicator(); // 첫 번째 실행 때만 로딩 인디케이터 표시
+            //                   // }
+            //                   if (snapshot.connectionState == ConnectionState.done) {
+            //                     if (snapshot.hasError) {
+            //                       return Text('오류: ${snapshot.error}');
+            //                     }
+            //                     if (snapshot.hasData) {
+            //
+            //                       DateTime date = DateTime(now.year, now.month, now.day-5, now.hour);
+            //
+            //                       //시작 날짜 받아오기
+            //                       startDate = date.toString().substring(0, 10);
+            //
+            //
+            //
+            //
+            //
+            //
+            //                       // 5일간 칼로리 / 영양성분 평균 변수
+            //                       double averageKcal = sumKcal / 5;
+            //                       double averageCarbohydrate = sumCarbohydrate / 5;
+            //                       double averageProtein = sumProtein / 5;
+            //                       double averageFat = sumFat / 5;
+            //
+            //
+            //
+            //                       String formattedKcal = averageKcal.toStringAsFixed(0);
+            //                       String formattedProtein = averageCarbohydrate.toStringAsFixed(0);
+            //                       String formattedCarbohydrate = averageProtein.toStringAsFixed(0);
+            //                       String formattedFat = averageFat.toStringAsFixed(0);
+            //
+            //
+            //
+            //                       final String formattedstartDate = startDate.toString().substring(0, 10);
+            //                       final String formattedendDate = endDate.toString().substring(0, 10);
+            //
+            //
+            //                       return Center(
+            //                         child: Container(
+            //                           width: 500.0,
+            //                           margin: EdgeInsets.only(bottom: 32.0),
+            //                           child: Column(
+            //                             children: [
+            //                               Container(
+            //                                 height: 300, // 그래프의 높이 조정
+            //                                 child: Padding(
+            //                                   padding: EdgeInsets.all(16.0),
+            //                                   child: BarChart(
+            //                                     BarChartData(
+            //                                       maxY: 100,
+            //                                       barGroups: getGroupedBarData(),
+            //                                       borderData: FlBorderData(
+            //                                         show: true,
+            //                                         border: Border(
+            //                                           left: BorderSide(color: Colors.black, width: 2),
+            //                                           bottom: BorderSide(color: Colors.black, width: 2),
+            //                                         ),
+            //                                       ),
+            //                                       titlesData: FlTitlesData(
+            //                                         show: false,
+            //                                       ),
+            //                                       gridData: FlGridData(
+            //                                         show: false,
+            //                                       ),
+            //                                       barTouchData: BarTouchData(
+            //                                         enabled: true,
+            //                                         touchTooltipData: BarTouchTooltipData(
+            //                                           tooltipBgColor: Colors.blueGrey,
+            //                                           getTooltipItem: (group, groupIndex, rod, rodIndex) {
+            //                                             return BarTooltipItem(
+            //                                               rod.toY.toStringAsFixed(1) + '%',
+            //                                               TextStyle(color: Colors.white),
+            //                                             );
+            //                                           },
+            //                                         ),
+            //                                       ),
+            //                                     ),
+            //                                   ),
+            //                                 ),
+            //                               ),
+            //                               SizedBox(height: 16.0), // 그래프와 텍스트 사이의 간격
+            //                               Container(
+            //                                 decoration: BoxDecoration(
+            //                                   border: Border.all(
+            //                                     color: Colors.black,
+            //                                     width: 2.0,
+            //                                   ),
+            //                                   borderRadius: BorderRadius.circular(16.0),
+            //                                 ),
+            //                                 padding: EdgeInsets.all(16.0),
+            //                                 child: Column(
+            //                                   children: [
+            //                                     Text(
+            //                                       '추가할 텍스트',
+            //                                       style: TextStyle(
+            //                                         fontSize: 16,
+            //                                         color: Colors.black,
+            //                                       ),
+            //                                     ),
+            //                                     // 나머지 코드
+            //
+            //
+            //                                     Text(
+            //                                       '$formattedstartDate ~ $formattedendDate',
+            //                                       style: TextStyle(
+            //                                         fontSize: 16,
+            //                                         fontWeight: FontWeight.bold,
+            //                                         color: Colors.black,
+            //                                       ),
+            //                                     ),
+            //                                     SizedBox(height: 8.0),
+            //                                     Text(
+            //                                       '$formattedKcal kcal\n$formattedProtein g\n$formattedCarbohydrate g\n$formattedFat g',
+            //                                       style: TextStyle(
+            //                                         fontSize: 16,
+            //                                         color: Colors.black,
+            //                                       ),
+            //                                       textAlign: TextAlign.center,
+            //                                     ),
+            //                                   ],
+            //                                 ),
+            //                               ),
+            //                             ],
+            //                           ),
+            //                         ),
+            //                       );
+            //
+            //
+            //
+            //                     }
+            //                   }
+            //                   // return CircularProgressIndicator();
+            //                   return Container(
+            //                     width: 0.0,
+            //                     height: 0.0,
+            //                   );
+            //                 },
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
 
 
 
@@ -833,7 +968,4 @@ class RecordState extends State<_Record> {
   }
 
 
-}
-
-class StreamGroup {
 }
