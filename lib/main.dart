@@ -40,11 +40,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'main 화면',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: Colors.white, // 상단바의 색상을 하얀색으로 설정
-        ),
-        scaffoldBackgroundColor: Color(0xff69DFCB), // 배경색을 초록색으로 설정
-        useMaterial3: true,
+        // colorScheme: ColorScheme.fromSwatch().copyWith(
+        //   primary: Colors.white, // 상단바의 색상을 하얀색으로 설정
+        // ),
+        // scaffoldBackgroundColor: Color(0xff69DFCB), // 배경색을 초록색으로 설정
+        // useMaterial3: true,
       ),
       initialRoute: isviewed == 0 || isviewed == null ? "first" : "/",
       routes: {
@@ -193,12 +193,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return Scaffold(
         key: _scaffoldKey,
+        backgroundColor: widget.titleColor,
         appBar: AppBar(
           title: Text(
             widget.title,
@@ -208,10 +205,12 @@ class _MyHomePageState extends State<MyHomePage> {
               fontSize: 32, // 글꼴 크기를 32로 변경
             ),
           ),
+          backgroundColor: Colors.white,
           leading: null,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.account_circle),
+              color: Colors.black54,
               onPressed: () async {
                 _scaffoldKey.currentState?.openEndDrawer();
                 info = (await db_user_info.getUserInfo())!;
@@ -227,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
 
                   padding: EdgeInsets.all(15.0),
-                  height: 200,
+                  height: 190,
                   decoration: BoxDecoration(
                     color: Color(0xff69DFCB),
                   ),
@@ -235,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.only(top: 40),
+                        padding: EdgeInsets.only(top: 50),
                         child: Text(
                           '나이: ${info != null ? (year - int.parse(info!.getYear() ?? "") + 1) : '정보 없음'}',
                           style: TextStyle(
@@ -363,7 +362,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           Center(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top: 32, right: 10, left: 10),
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -384,10 +383,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
 
+          Container(
+              height: 70,
+          ), // 원래의 중앙 정렬을 유지하기 위해 추가된 빈 컨테이너
 
-          Expanded(
-            child: Container(), // 원래의 중앙 정렬을 유지하기 위해 추가된 빈 컨테이너
-          ),
 
 
 

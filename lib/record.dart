@@ -41,8 +41,6 @@ class RecordState extends State<_Record> {
   eatDatabase? eatdb = eatDatabase();
   db_user_information db_user_info = db_user_information();
   user_information? info;
-  int year = 0;
-  Future<List<Food>>? eatList;
 
 
 
@@ -240,21 +238,23 @@ class RecordState extends State<_Record> {
                 if (snapshot.hasData) {
                   final List<user_nutrient> list = snapshot.data!;
                   user_nutrient nutri = list[0];
-                  DateTime date = DateTime(now.year, now.month, now.day-5, now.hour);
+                  DateTime date = DateTime(now.year, now.month, now.day-4, now.hour);
 
                   //시작 날짜 받아오기
                   startDate = date.toString().substring(0, 10);
 
-                  double eatKcal = double.tryParse(nutri.eatKcal ?? '') ?? 0.0;
-                  double eatProtein = double.tryParse(nutri.eatProtein ?? '') ?? 0.0;
-                  double eatCarbohydrate = double.tryParse(nutri.eatCarbohydrate ?? '') ?? 0.0;
-                  double eatFat = double.tryParse(nutri.eatFat ?? '') ?? 0.0;
+                  double eatKcal = double.tryParse(nutri.eatKcal ?? '0') ?? 0.0;
+                  double eatProtein = double.tryParse(nutri.eatProtein ?? '0') ?? 0.0;
+                  double eatCarbohydrate = double.tryParse(nutri.eatCarbohydrate ?? '0') ?? 0.0;
+                  double eatFat = double.tryParse(nutri.eatFat ?? '0') ?? 0.0;
 
                   // 5일간 칼로리 / 영양성분 더하기 변수
                   sumKcal += eatKcal;
                   sumCarbohydrate += eatCarbohydrate;
                   sumProtein += eatProtein;
                   sumFat += eatFat;
+
+
 
 
                   // 5일간 칼로리 / 영양성분 퍼센트 계산
@@ -315,12 +315,12 @@ class RecordState extends State<_Record> {
                 if (snapshot.hasData) {
                   final List<user_nutrient> list = snapshot.data!;
                   user_nutrient nutri = list[0];
-                  // DateTime date = DateTime(now.year, now.month, now.day-4, now.hour);
+                  // DateTime date = DateTime(now.year, now.month, now.day-3, now.hour);
 
-                  double eatKcal = double.tryParse(nutri.eatKcal ?? '') ?? 0.0;
-                  double eatProtein = double.tryParse(nutri.eatProtein ?? '') ?? 0.0;
-                  double eatCarbohydrate = double.tryParse(nutri.eatCarbohydrate ?? '') ?? 0.0;
-                  double eatFat = double.tryParse(nutri.eatFat ?? '') ?? 0.0;
+                  double eatKcal = double.tryParse(nutri.eatKcal ?? '0') ?? 0.0;
+                  double eatProtein = double.tryParse(nutri.eatProtein ?? '0') ?? 0.0;
+                  double eatCarbohydrate = double.tryParse(nutri.eatCarbohydrate ?? '0') ?? 0.0;
+                  double eatFat = double.tryParse(nutri.eatFat ?? '0') ?? 0.0;
 
                   // 5일간 칼로리 / 영양성분 더하기 변수
                   sumKcal += eatKcal;
@@ -385,12 +385,12 @@ class RecordState extends State<_Record> {
                 if (snapshot.hasData) {
                   final List<user_nutrient> list = snapshot.data!;
                   user_nutrient nutri = list[0];
-                  // DateTime date = DateTime(now.year, now.month, now.day-3, now.hour);
+                  // DateTime date = DateTime(now.year, now.month, now.day-2, now.hour);
 
-                  double eatKcal = double.tryParse(nutri.eatKcal ?? '') ?? 0.0;
-                  double eatProtein = double.tryParse(nutri.eatProtein ?? '') ?? 0.0;
-                  double eatCarbohydrate = double.tryParse(nutri.eatCarbohydrate ?? '') ?? 0.0;
-                  double eatFat = double.tryParse(nutri.eatFat ?? '') ?? 0.0;
+                  double eatKcal = double.tryParse(nutri.eatKcal ?? '0') ?? 0.0;
+                  double eatProtein = double.tryParse(nutri.eatProtein ?? '0') ?? 0.0;
+                  double eatCarbohydrate = double.tryParse(nutri.eatCarbohydrate ?? '0') ?? 0.0;
+                  double eatFat = double.tryParse(nutri.eatFat ?? '0') ?? 0.0;
 
                   // 5일간 칼로리 / 영양성분 더하기 변수
                   sumKcal += eatKcal;
@@ -455,12 +455,12 @@ class RecordState extends State<_Record> {
                 if (snapshot.hasData) {
                   final List<user_nutrient> list = snapshot.data!;
                   user_nutrient nutri = list[0];
-                  // DateTime date = DateTime(now.year, now.month, now.day-2, now.hour);
+                  // DateTime date = DateTime(now.year, now.month, now.day-1, now.hour);
 
-                  double eatKcal = double.tryParse(nutri.eatKcal ?? '') ?? 0.0;
-                  double eatProtein = double.tryParse(nutri.eatProtein ?? '') ?? 0.0;
-                  double eatCarbohydrate = double.tryParse(nutri.eatCarbohydrate ?? '') ?? 0.0;
-                  double eatFat = double.tryParse(nutri.eatFat ?? '') ?? 0.0;
+                  double eatKcal = double.tryParse(nutri.eatKcal ?? '0') ?? 0.0;
+                  double eatProtein = double.tryParse(nutri.eatProtein ?? '0') ?? 0.0;
+                  double eatCarbohydrate = double.tryParse(nutri.eatCarbohydrate ?? '0') ?? 0.0;
+                  double eatFat = double.tryParse(nutri.eatFat ?? '0') ?? 0.0;
 
                   // 5일간 칼로리 / 영양성분 더하기 변수
                   sumKcal += eatKcal;
@@ -527,17 +527,18 @@ class RecordState extends State<_Record> {
                   final List<user_nutrient> list = snapshot.data!;
                   user_nutrient nutri = list[0];
                   DateTime date = DateTime(
-                      now.year, now.month, now.day - 1, now.hour);
+                      now.year, now.month, now.day, now.hour);
 
                   //끝 날짜 받아오기
                   endDate = date.toString().substring(0, 10);
 
-                  double eatKcal = double.tryParse(nutri.eatKcal ?? '') ?? 0.0;
-                  double eatProtein = double.tryParse(nutri.eatProtein ?? '') ??
-                      0.0;
+                  double eatKcal = double.tryParse(nutri.eatKcal ?? '0') ?? 0.0;
+                  double eatProtein = double.tryParse(nutri.eatProtein ?? '0') ?? 0.0;
                   double eatCarbohydrate = double.tryParse(
-                      nutri.eatCarbohydrate ?? '') ?? 0.0;
-                  double eatFat = double.tryParse(nutri.eatFat ?? '') ?? 0.0;
+                      nutri.eatCarbohydrate ?? '0') ?? 0.0;
+                  double eatFat = double.tryParse(nutri.eatFat ?? '0') ?? 0.0;
+
+
 
                   // 5일간 칼로리 / 영양성분 더하기 변수
                   sumKcal += eatKcal;
@@ -577,6 +578,9 @@ class RecordState extends State<_Record> {
                   DataList[1][4] = percentCarbohydrate;
                   DataList[2][4] = percentProtein;
                   DataList[3][4] = percentFat;
+                  print(DataList);
+                  print('nutri.eatKcal ${nutri.eatKcal}');
+                  print('_needKcalText() ${_needKcalText()}');
                 }
                 Container(
                   padding: EdgeInsets.only(top: 50.0),
@@ -608,6 +612,7 @@ class RecordState extends State<_Record> {
                               return BarTooltipItem(
                                 rod.toY.toStringAsFixed(1) + '%',
                                 TextStyle(color: Colors.white),
+
                               );
                             },
                           ),
@@ -639,6 +644,7 @@ class RecordState extends State<_Record> {
 
           Container(
             height: 30,
+
           ), // 원래의 중앙 정렬을 유지하기 위해 추가된 빈 컨테이너
 
 
