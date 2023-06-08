@@ -678,7 +678,7 @@ class RecordState extends State<_Record> {
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors.black,
+                                    color: Color(0xff69DFCB),
                                     width: 2.0,
                                   ),
                                   borderRadius: BorderRadius.circular(16.0),
@@ -699,7 +699,7 @@ class RecordState extends State<_Record> {
                                       '$formattedKcal kcal\n$formattedProtein g\n$formattedCarbohydrate g\n$formattedFat g',
                                       style: TextStyle(
                                         fontSize: 16,
-                                        color: Colors.black,
+                                        color: Colors. grey,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
