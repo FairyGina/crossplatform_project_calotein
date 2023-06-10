@@ -104,8 +104,8 @@ class eatDatabase {
     final DateTime endTime = startTime.add(Duration(days: 1));
 
 
-    print("시작: ${startTime}");
-    print("끝: ${endTime}");
+    // print("시작: ${startTime}");
+    // print("끝: ${endTime}");
     List<Map<String, dynamic>> maps = await db!.rawQuery('SELECT SUM(calorie),SUM(protein),SUM(carbohydrate),SUM(fat) FROM eat WHERE date >= ? AND date < ?', [startTime.toString(), endTime.toString()]);
 
       // if (result.isNotEmpty && result[0]['SUM(calorie),SUM(protein),SUM(carbohydrate),SUM(fat)'] != null) {

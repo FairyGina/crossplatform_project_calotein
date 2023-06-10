@@ -93,7 +93,7 @@ class _infoModify extends State<infoModify> {
     goal.text = info?.getGoal().toString() ?? '';
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
             '정보 변경',
