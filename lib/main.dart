@@ -1,27 +1,17 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-// import 'package:animated_fl_chart/animated_fl_chart.dart';
 
 import 'package:calotin/db_user_information.dart';
 import 'package:calotin/food_db.dart';
 import 'package:calotin/eat_db.dart';
-
 import 'package:calotin/class_user_information.dart';
 import 'package:calotin/food_class.dart';
-
 import 'package:calotin/user_information.dart';
 import 'package:calotin/food.dart';
 import 'package:calotin/userinfo_modify.dart';
 import 'package:calotin/record.dart';
-
-
-
-
-
-
+import 'package:calotin/splash.dart';
 
 int? isviewed;
 Future<void> main() async {
@@ -30,7 +20,7 @@ Future<void> main() async {
   isviewed = await prefs.getInt("isviewed");
   await prefs.setInt("isviewed", 1);
 
-  runApp(MyApp());
+  runApp(SplashPage());
 }
 
 class MyApp extends StatelessWidget {
@@ -40,11 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'main 화면',
       theme: ThemeData(
-        // colorScheme: ColorScheme.fromSwatch().copyWith(
-        //   primary: Colors.white, // 상단바의 색상을 하얀색으로 설정
-        // ),
-        // scaffoldBackgroundColor: Color(0xff69DFCB), // 배경색을 초록색으로 설정
-        // useMaterial3: true,
+
       ),
       initialRoute: isviewed == 0 || isviewed == null ? "first" : "/",
       routes: {
@@ -52,17 +38,13 @@ class MyApp extends StatelessWidget {
         'first' : (context) => user_info(),
       },
     );
-
-
   }
-
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title, required this.titleColor});
   final String title;
   final Color titleColor;
-
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -77,16 +59,11 @@ class _MyHomePageState extends State<MyHomePage> {
   int year = 0;
   Future<List<Food>>? eatList;
 
-
   //데이터 저장 전역변수
   double totalKcalData=0;
   double totalProteinData=0;
   double totalCarbohydrateData=0;
   double totalFatData=0;
-
-
-
-
 
   // 데이터 베이스 가져오기
   @override
@@ -99,9 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         info = fetchedInfo;
       });
     });
-
   }
-
 
   //목표 표시
   String _getGoalText() {
@@ -112,9 +87,6 @@ class _MyHomePageState extends State<MyHomePage> {
       return '   목표 없음   ';
     }
   }
-
-
-
 
   //필요 영양성분 표시
   String _needKcalText() {
@@ -134,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return '0';
     }
   }
+
   String _needCarbohydrateText() {
     if (info != null) {
       String carbohydrates = info!.needActivityCarbohydrates() ?? '0';
@@ -142,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return '0';
     }
   }
+
   String _needFatText() {
     if (info != null) {
       String fat = info!.needActivityFat() ?? '0';
@@ -150,23 +124,6 @@ class _MyHomePageState extends State<MyHomePage> {
       return '0';
     }
   }
-
-
-  // Future<double> getTotalProtein() async {
-  //   double totalProtein = 0;
-  //   Database database = await openDatabase(
-  //     join(await getDatabasesPath(), 'eat.db'),
-  //   );
-  //   List<Map<String, dynamic>> result = await database.rawQuery('SELECT SUM(protein) FROM eat');
-  //
-  //   if (result.isNotEmpty && result[0]['SUM(protein)'] != null) {
-  //     totalProtein = result[0]['SUM(protein)'] as double;
-  //   }
-  //
-  //   return totalProtein;
-  // }
-
-
 
   List<BarChartGroupData> getData(double g) {
     if(g>100) g=100;
@@ -184,12 +141,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ];
   }
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -220,11 +171,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         endDrawer: Drawer(
           child: ListView(
-
             padding: EdgeInsets.zero,
             children: [
               Container(
-
                   padding: EdgeInsets.all(15.0),
                   height: 190,
                   decoration: BoxDecoration(
@@ -307,7 +256,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 child: ListTile(
-
                   title: Text('정보 변경'),
                   onTap: () {
                     Navigator.push(
@@ -342,24 +290,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         //여기까지 옆에 프로필 화면
 
-
-
-
-
-
-
-
-
-
-
-
-
-      body: Column(
-
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
-
-
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 32, right: 10, left: 10),
@@ -382,14 +314,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-
           Container(
-              height: 70,
-          ), // 원래의 중앙 정렬을 유지하기 위해 추가된 빈 컨테이너
-
-
-
-
+              height: 60, // 원래의 중앙 정렬을 유지하기 위해 추가된 빈 컨테이너
+          ),
           //원형그래프
           Center(
             child: Container(
@@ -509,27 +436,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-
-
-
-
-
-
-
           Center(
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-
                 children: [
                   Container(
                     padding: const EdgeInsets.all(4.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -563,11 +480,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   if (snapshot.hasError) {
                                                     return Text('Error: ${snapshot.error}');
                                                   }
-
                                                   if (!snapshot.hasData) {
                                                     return CircularProgressIndicator();
                                                   }
-
                                                   double _totalCarbohydrate = snapshot.data ?? 0;
 
                                                   double result = _totalCarbohydrate / double.parse(_needCarbohydrateText()) * 100;
@@ -598,7 +513,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ),
                                         ),
                                       ),
-
                                       Text(
                                         '탄수화물',
                                         style: TextStyle(
@@ -606,18 +520,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                           color: Colors.white,
                                         ),
                                       ),
-
                                       StreamBuilder<double>(
                                         stream: eatdb!.getTotalCarbohydrateStream(),
                                         builder: (context, snapshot) {
                                           if (snapshot.hasError) {
                                             return Text('Error: ${snapshot.error}');
                                           }
-
                                           if (!snapshot.hasData) {
                                             return CircularProgressIndicator();
                                           }
-
                                           double _totalCarbohydrate = snapshot.data ?? 0;
                                           String totalCarbohydrate = _totalCarbohydrate.toStringAsFixed(0);
 
@@ -631,7 +542,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                           );
                                         },
                                       ),
-
                                     ],
                                   ),
                                 ),
@@ -642,14 +552,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-
-
                   Container(
                     padding: const EdgeInsets.all(4.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -683,11 +590,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   if (snapshot.hasError) {
                                                     return Text('Error: ${snapshot.error}');
                                                   }
-
                                                   if (!snapshot.hasData) {
                                                     return CircularProgressIndicator();
                                                   }
-
                                                   double _totalProtein = snapshot.data ?? 0;
 
                                                   double result = _totalProtein / double.parse(_needProteinText()) * 100;
@@ -718,7 +623,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ),
                                         ),
                                       ),
-
                                       Text(
                                         '단백질',
                                         style: TextStyle(
@@ -726,18 +630,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                           color: Colors.white,
                                         ),
                                       ),
-
                                       StreamBuilder<double>(
                                         stream: eatdb!.getTotalProteinStream(),
                                         builder: (context, snapshot) {
                                           if (snapshot.hasError) {
                                             return Text('Error: ${snapshot.error}');
                                           }
-
                                           if (!snapshot.hasData) {
                                             return CircularProgressIndicator();
                                           }
-
                                           double _totalProtein = snapshot.data ?? 0;
 
                                           double result=_totalProtein/double.parse(_needProteinText())* 100;
@@ -762,20 +663,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-
-
-
                   Container(
                     width: 16.0, // 간격을 조정하기 위한 Container
                   ),
-
-
                   Container(
                     padding: const EdgeInsets.all(4.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
@@ -809,11 +704,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   if (snapshot.hasError) {
                                                     return Text('Error: ${snapshot.error}');
                                                   }
-
                                                   if (!snapshot.hasData) {
                                                     return CircularProgressIndicator();
                                                   }
-
                                                   double _totalFat = snapshot.data ?? 0;
 
                                                   double result = _totalFat / double.parse(_needFatText()) * 100;
@@ -844,7 +737,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ),
                                         ),
                                       ),
-
                                       Text(
                                         '지방',
                                         style: TextStyle(
@@ -852,18 +744,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                           color: Colors.white,
                                         ),
                                       ),
-
                                       StreamBuilder<double>(
                                         stream: eatdb!.getTotalFatStream(),
                                         builder: (context, snapshot) {
                                           if (snapshot.hasError) {
                                             return Text('Error: ${snapshot.error}');
                                           }
-
                                           if (!snapshot.hasData) {
                                             return CircularProgressIndicator();
                                           }
-
                                           double _totalFat = snapshot.data ?? 0;
 
                                           double result=_totalFat/double.parse(_needFatText())* 100;
@@ -888,17 +777,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-
-
-
-
                 ],
               ),
             ),
           ),
-
-
-
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -920,11 +802,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       }
-
                       if (!snapshot.hasData) {
                         return CircularProgressIndicator();
                       }
-
                       double _totalkcal = snapshot.data ?? 0;
                       double result=double.parse(_needKcalText())-_totalkcal;
                       if(result<0) result = 0;
@@ -934,24 +814,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         '칼로리: $totalkcal kcal',
                         style: TextStyle(fontSize: 16, color: Color(0xff69DFCB)),
                         textAlign: TextAlign.center, // 가운데 정렬 설정
-
                       );
                     },
                   ),
-
-
-
                     StreamBuilder<double>(
                       stream: eatdb!.getTotalCarbohydrateStream(),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         }
-
                         if (!snapshot.hasData) {
                           return CircularProgressIndicator();
                         }
-
                         double _totalCarbohydrate = snapshot.data ?? 0;
                         double result=_totalCarbohydrate/double.parse(_needCarbohydrateText())* 100;
                         if(result>100) result = 100;
@@ -963,21 +837,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       },
                     ),
-
-
-
-
                     StreamBuilder<double>(
                       stream: eatdb!.getTotalProteinStream(),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         }
-
                         if (!snapshot.hasData) {
                           return CircularProgressIndicator();
                         }
-
                         double _totalProtein = snapshot.data ?? 0;
                         double result=_totalProtein/double.parse(_needProteinText())* 100;
                         if(result>100) result = 100;
@@ -989,20 +857,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       },
                     ),
-
-
-
                     StreamBuilder<double>(
                       stream: eatdb!.getTotalFatStream(),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         }
-
                         if (!snapshot.hasData) {
                           return CircularProgressIndicator();
                         }
-
                         double _totalFat = snapshot.data ?? 0;
                         double result=_totalFat/double.parse(_needFatText())* 100;
                         if(result>100) result = 100;
@@ -1014,29 +877,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       },
                     ),
-
-
-
-
-
-
-
-
-
                   ],
                 ),
               ),
             ),
           ),
-
-
-
-
         ],
       ),
     );
   }
-
-  record() {}
 }
 

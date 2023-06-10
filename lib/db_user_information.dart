@@ -28,7 +28,6 @@ class db_user_information {
     return _database;
   }
 
-
   Future _onCreate(Database db, int version) async {
     String sql = '''
     CREATE TABLE IF NOT EXISTS user_info(
@@ -60,38 +59,14 @@ class db_user_information {
       'year': user.year,
       'month': user.month,
       'day': user.day,
-
       'gender': user.gender,
-
       'cm': user.cm,
       'kg': user.kg,
-
       'activity': user.activity,
       'multiActivityProtein': user.multiActivityProtein,
-
       'goal': user.goal,
-
-
     });
   } //리스트에서 누른 음식 추가하는 거(그날 먹은 음식)
-
-  // Future<List<user_information>> getUserInfo() async {
-  //   final db = await database;
-  //   final List<Map<String, dynamic>>? maps = await db?.query('user_info');
-  //
-  //   return maps!.map((map) {
-  //     return user_information(
-  //       year: map['year'].toString(),
-  //       month: map['month'].toString(),
-  //       day: map['day'].toString(),
-  //       gender: map['gender'].toString(),
-  //       cm: map['cm'].toString(),
-  //       kg: map['kg'].toString(),
-  //       activity: map['activity'].toString(),
-  //       goal: map['goal'].toString(),
-  //     );
-  //   }).toList();
-  // }
 
   Future<user_information?> getUserInfo() async {
     final db = await database;
@@ -107,5 +82,4 @@ class db_user_information {
 
     return null; // 데이터가 없을 경우 null 반환
   }
-
 }

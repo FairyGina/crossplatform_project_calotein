@@ -4,6 +4,7 @@ import 'package:calotin/food_db.dart';
 import 'package:flutter/material.dart';
 
 class foodAddPage extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
     return _foodAddPage();
@@ -11,7 +12,6 @@ class foodAddPage extends StatefulWidget {
 }
 
 class _foodAddPage extends State<foodAddPage> {
-  final formKey = GlobalKey<FormState>();
   foodDatabase? fooddb = foodDatabase();
 
   final foodName = TextEditingController();
@@ -30,7 +30,6 @@ class _foodAddPage extends State<foodAddPage> {
         backgroundColor: Color(0xff69DFCB),
       ),
       body: SingleChildScrollView(
-        key: this.formKey,
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Center(

@@ -1,3 +1,4 @@
+import 'package:calotin/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -7,22 +8,6 @@ import 'package:calotin/food_add.dart';
 import 'package:calotin/food_db.dart';
 import 'package:calotin/food_class.dart';
 import 'package:calotin/eat_db.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // String dbpath = join(await getDatabasesPath(), 'food.db');
-  // if(await databaseExists(dbpath)) {
-  //   await deleteDatabase(dbpath);
-  // } //db 삭제(처음부터 존재하면)
-  //
-  // String dbpath = join(await getDatabasesPath(), 'eat.db');
-  // if(await databaseExists(dbpath)) {
-  //   await deleteDatabase(dbpath);
-  // } //db 삭제(처음부터 존재하면)
-
-  runApp(foodPage());
-}
 
 class foodPage extends StatelessWidget {
   @override
@@ -51,14 +36,8 @@ class foodPageState extends State<_foodPage> {
   @override
   void initState() {
     super.initState();
-
-    // eatdb?.initDB();
-    // fooddb?.createFood().then((value) {
-    //   setState(() {
-    //     datalist = fooddb!.getFood(); //화면에 리스트 띄워두는 건데 필요없으면 나중에 지울 것
-    //   });
-    // }); //데이터베이스 생성하는 거 나중에 다 메인으로 옮길 것
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +45,14 @@ class foodPageState extends State<_foodPage> {
       appBar: AppBar(
         title: Text('검색'),
         backgroundColor: Color(0xff69DFCB),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => MyHomePage(title: 'calotein',titleColor: Color(0xff69DFCB)))
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(8.0),

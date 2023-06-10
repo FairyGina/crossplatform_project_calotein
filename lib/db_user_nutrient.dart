@@ -2,8 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import 'package:calotin/class_user_nutrient.dart';
-import 'main.dart';
-
 
 class db_user_nutrient {
   Database? _database;
@@ -29,7 +27,6 @@ class db_user_nutrient {
 
     return _database;
   }
-
 
   Future _onCreate(Database db, int version) async {
     String sql = '''
@@ -91,5 +88,4 @@ class db_user_nutrient {
       'eatFat': nutr.eatFat,
     });
   }
-
 }

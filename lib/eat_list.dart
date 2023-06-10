@@ -1,12 +1,8 @@
+import 'package:calotin/food.dart';
 import 'package:flutter/material.dart';
 
 import 'package:calotin/food_class.dart';
 import 'package:calotin/eat_db.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(eatPage());
-}
 
 class eatPage extends StatelessWidget {
   @override
@@ -37,9 +33,6 @@ class _eatState extends State<_eatPage> {
   void initState() {
     super.initState();
     eatList = eatdb?.getCurrentDayEat();  //eat_db 파일에 있는 함수로 데이터 저장
-    setState(() {
-
-    });
   }
 
   @override
@@ -48,6 +41,14 @@ class _eatState extends State<_eatPage> {
       appBar: AppBar(
         title: Text('먹은 음식'),
         backgroundColor: Color(0xff69DFCB),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => foodPage())
+            );
+          },
+        ),
       ),
       body:SingleChildScrollView(
         child: Container(

@@ -11,7 +11,6 @@ class infoModify extends StatefulWidget {
 }
 
 class _infoModify extends State<infoModify> {
-  final formKey = GlobalKey<FormState>();
   db_user_information? db_user_info = db_user_information();
   user_information? info;
 
@@ -56,19 +55,19 @@ class _infoModify extends State<infoModify> {
         _genderradioValue = (info?.getGender() == '여자') ? 0 : 1;
         if (info != null) {
           switch (info!.getActivity()) {
-            case '0':
+            case '1.2':
               _selectedActivity = activityDropdownList[0];
               break;
-            case '1':
+            case '1.375':
               _selectedActivity = activityDropdownList[1];
               break;
-            case '2':
+            case '1.55':
               _selectedActivity = activityDropdownList[2];
               break;
-            case '3':
+            case '1.725':
               _selectedActivity = activityDropdownList[3];
               break;
-            case '4':
+            case '1.9':
               _selectedActivity = activityDropdownList[4];
               break;
             default:
@@ -82,7 +81,6 @@ class _infoModify extends State<infoModify> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     year.text = info?.getYear().toString() ?? '';
@@ -95,12 +93,7 @@ class _infoModify extends State<infoModify> {
     return Scaffold(
       // backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-            '정보 변경',
-          // style: TextStyle(
-          //   color: Colors.white,
-          // ),
-        ),
+        title: Text('정보 변경'),
         backgroundColor: Color(0xff69DFCB),
       ),
       body: SingleChildScrollView(
@@ -112,7 +105,6 @@ class _infoModify extends State<infoModify> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-
                     //생년월일 입력
                     Container(
                       width: 135,
@@ -149,7 +141,6 @@ class _infoModify extends State<infoModify> {
                     ),
                   ],
                 ),
-
                 Row(
                   children: <Widget>[
                     Padding(
@@ -159,24 +150,6 @@ class _infoModify extends State<infoModify> {
                         style: TextStyle(
                           fontSize: 16,
                         ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        children: [
-                          Radio(
-                            value: 0,
-                            groupValue: _genderradioValue,
-                            onChanged: _radiochange,
-                          ),
-                          Text(
-                            '여자',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                     Container(
@@ -197,9 +170,26 @@ class _infoModify extends State<infoModify> {
                         ],
                       ),
                     ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        children: [
+                          Radio(
+                            value: 0,
+                            groupValue: _genderradioValue,
+                            onChanged: _radiochange,
+                          ),
+                          Text(
+                            '여자',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-
                 Container(
                   padding: EdgeInsets.all(3.0),
                   child: TextField(
@@ -220,7 +210,6 @@ class _infoModify extends State<infoModify> {
                     controller: kg,
                   ),
                 ),
-
                 // 활동량 드롭다운 버튼
                 Container(
                   padding: EdgeInsets.all(3.0),
@@ -242,7 +231,6 @@ class _infoModify extends State<infoModify> {
                     },
                   ),
                 ),
-
                 Container(
                   padding: EdgeInsets.all(3.0),
                   child: TextField(
@@ -253,8 +241,6 @@ class _infoModify extends State<infoModify> {
                     controller: goal,
                   ),
                 ),
-
-
                 Container(
                   padding: EdgeInsets.all(3.0),
                   width: 70,
@@ -278,21 +264,26 @@ class _infoModify extends State<infoModify> {
                       ),
                     ),
                     onPressed: () async {
-
                       String genderValue = (_genderradioValue == 0) ? '여자' : '남자'; //여자 남자 선택
 
-                      String selectActivityValue='0';
-                      //List<String> activityDropdownList = ['아예 없음','1~2번','3~4번','5~6','매일'];
+                      String selectActivityValue='1.2';
+                      String selectActivityProteinValue='1.0';
+
                       if(_selectedActivity=='아예 없음') {
-                        selectActivityValue='0';
+                        selectActivityValue='1.2';
+                        selectActivityProteinValue='1.0';
                       } else if(_selectedActivity=='1~2번') {
-                        selectActivityValue='1';
+                        selectActivityValue='1.375';
+                        selectActivityProteinValue='1.25';
                       } else if(_selectedActivity=='3~4번') {
-                        selectActivityValue='2';
+                        selectActivityValue='1.55';
+                        selectActivityProteinValue='1.5';
                       } else if(_selectedActivity=='5~6번') {
-                        selectActivityValue='3';
+                        selectActivityValue='1.725';
+                        selectActivityProteinValue='1.75';
                       } else if(_selectedActivity=='매일') {
-                        selectActivityValue='4';
+                        selectActivityValue='1.9';
+                        selectActivityProteinValue='2.0';
                       }
 
                       // _genderradioValue를 '여자' 또는 '남자'로 변환하여 저장
@@ -300,15 +291,12 @@ class _infoModify extends State<infoModify> {
                         year: year.text,
                         month: month.text,
                         day: day.text,
-
                         gender: genderValue,
-
                         cm: cm.text,
                         kg: kg.text,
                         activity: selectActivityValue, // 선택된 활동량 값 사용
-
+                        multiActivityProtein: selectActivityProteinValue,
                         goal: goal.text,
-
                       );
                       await db_user_info?.add(user_info);
                       Navigator.of(context).pop();
@@ -316,15 +304,11 @@ class _infoModify extends State<infoModify> {
                   ),
                 ),
               ],
-
             ),
           ),
-
         ),
-
       ),
     );
   }
-
 }
 

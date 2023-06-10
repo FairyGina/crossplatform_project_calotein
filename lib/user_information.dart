@@ -1,23 +1,10 @@
-import 'package:calotin/main.dart';
-
-import 'class_user_information.dart';
-import 'db_user_information.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-
 import 'package:flutter/material.dart';
 
+import 'package:calotin/main.dart';
+import 'class_user_information.dart';
+import 'db_user_information.dart';
 import 'eat_db.dart';
 import 'food_db.dart';
-Future<void> main() async {
-
-  runApp(user_info());
-
-  // String dbpath = join(await getDatabasesPath(), 'user_info.db');
-  // if(await databaseExists(dbpath)) {
-  //   await deleteDatabase(dbpath);
-  // } //db 삭제(처음부터 존재하면)
-}
 
 class user_info extends StatefulWidget {
   @override
@@ -27,7 +14,6 @@ class user_info extends StatefulWidget {
 }
 
 class _user_info extends State<user_info> {
-  final formKey = GlobalKey<FormState>();
   db_user_information db_user_info = db_user_information();
   foodDatabase? fooddb = foodDatabase();
   eatDatabase? eatdb = eatDatabase();
@@ -35,17 +21,12 @@ class _user_info extends State<user_info> {
   final year = TextEditingController();
   final month = TextEditingController();
   final day = TextEditingController();
-
   final gender = TextEditingController();
-
   final cm = TextEditingController();
   final kg = TextEditingController();
   final activity = TextEditingController();
-
   final goal = TextEditingController();
-
   //입력받은 값들을 저장하기 위한 변수
-
 
   //라디오 버튼 값
   int? _genderradioValue; // 라디오 버튼 값 상태 변수
@@ -56,8 +37,6 @@ class _user_info extends State<user_info> {
     });
   }
 
-
-
   //활동량 정보
   String? _selectedActivity; // 활동량 드롭다운 값 상태 변수
 
@@ -67,7 +46,6 @@ class _user_info extends State<user_info> {
       _selectedActivity = value; // 선택된 활동량 값 갱신
     });
   }
-
 
   List<String> activityDropdownList = ['아예 없음','1~2번','3~4번','5~6번','매일'];
   String activityDropdownValue = '0';
@@ -82,10 +60,6 @@ class _user_info extends State<user_info> {
       activityDropdownValue = activityDropdownList[0];
     });
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +78,6 @@ class _user_info extends State<user_info> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-
                     //생년월일 입력
                     Container(
                       width: 135,
@@ -141,7 +114,6 @@ class _user_info extends State<user_info> {
                     ),
                   ],
                 ),
-
                 Row(
                   children: <Widget>[
                     Padding(
@@ -191,10 +163,6 @@ class _user_info extends State<user_info> {
                     ),
                   ],
                 ),
-
-
-
-
                 Container(
                   padding: EdgeInsets.all(3.0),
                   child: TextField(
@@ -215,7 +183,6 @@ class _user_info extends State<user_info> {
                     controller: kg,
                   ),
                 ),
-
                 // 활동량 드롭다운 버튼
                 Container(
                   padding: EdgeInsets.all(3.0),
@@ -237,10 +204,6 @@ class _user_info extends State<user_info> {
                     },
                   ),
                 ),
-
-
-
-
                 Container(
                   padding: EdgeInsets.all(3.0),
                   child: TextField(
@@ -251,15 +214,12 @@ class _user_info extends State<user_info> {
                     controller: goal,
                   ),
                 ),
-
-
                 Container(
                   padding: EdgeInsets.all(3.0),
                   width: 70,
                   height: 50,
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      // padding: EdgeInsets.all(1.0),
                         backgroundColor: Color(0xff69DFCB),
                         side: BorderSide(
                           color: Color(0xff69DFCB),
@@ -276,12 +236,10 @@ class _user_info extends State<user_info> {
                       ),
                     ),
                     onPressed: () async {
-
                       String genderValue = (_genderradioValue == 0) ? '여자' : '남자'; //여자 남자 선택
-
                       String selectActivityValue='1.2';
                       String selectActivityProteinValue='1.0';
-                      //List<String> activityDropdownList = ['아예 없음','1~2번','3~4번','5~6','매일'];
+
                       if(_selectedActivity=='아예 없음') {
                         selectActivityValue='1.2';
                         selectActivityProteinValue='1.0';
@@ -299,24 +257,17 @@ class _user_info extends State<user_info> {
                         selectActivityProteinValue='2.0';
                       }
 
-
-
                       // _genderradioValue를 '여자' 또는 '남자'로 변환하여 저장
                       user_information user_info = user_information(
                         year: year.text,
                         month: month.text,
                         day: day.text,
-
                         gender: genderValue,
-
                         cm: cm.text,
                         kg: kg.text,
-
                         activity: selectActivityValue, // 선택된 활동량 값 사용
                         multiActivityProtein: selectActivityProteinValue,
-
                         goal: goal.text,
-
                       );
                       await db_user_info?.add(user_info);
                       Navigator.pushReplacement(
@@ -327,12 +278,9 @@ class _user_info extends State<user_info> {
                   ),
                 ),
               ],
-
             ),
           ),
-
         ),
-
       ),
     );
   }

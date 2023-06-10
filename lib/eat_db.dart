@@ -4,8 +4,6 @@ import 'package:path/path.dart';
 import 'package:calotin/food_class.dart';
 import 'package:calotin/class_user_nutrient.dart';
 
-import 'main.dart';
-
 class eatDatabase {
   Database? _database;
 
@@ -92,26 +90,17 @@ class eatDatabase {
   Future<List<user_nutrient>> getTotalKcal(DateTime date) async {
     final db = await database;
     DateTime currentDay;
-    print("오늘날짜: ${date}");
     if (date.hour >= 3) {
       currentDay = DateTime(date.year, date.month, date.day);
     } else {
       currentDay = DateTime(date.year, date.month, date.day - 1);
     }
 
-
     final DateTime startTime = DateTime(currentDay.year, currentDay.month, currentDay.day, 3);
     final DateTime endTime = startTime.add(Duration(days: 1));
 
-
-    // print("시작: ${startTime}");
-    // print("끝: ${endTime}");
     List<Map<String, dynamic>> maps = await db!.rawQuery('SELECT SUM(calorie),SUM(protein),SUM(carbohydrate),SUM(fat) FROM eat WHERE date >= ? AND date < ?', [startTime.toString(), endTime.toString()]);
 
-      // if (result.isNotEmpty && result[0]['SUM(calorie),SUM(protein),SUM(carbohydrate),SUM(fat)'] != null) {
-      //   totalKcal = result[0]['SUM(calorie)'] as double;
-      // }
-    print(maps);
     return maps.map<user_nutrient>((nutrient) {
       return user_nutrient(
         eatKcal: nutrient['SUM(calorie)'].toString(),
@@ -120,20 +109,7 @@ class eatDatabase {
         eatFat: nutrient['SUM(fat)'].toString(),
       );
     }).toList();
-
-
   }
-
-
-
-
-
-
-
-
-
-
-
 
   Stream<double> getTotalKcalStream() async* {
     final db = await database;
@@ -163,8 +139,6 @@ class eatDatabase {
       await Future.delayed(Duration(seconds: 1));
     }
   }
-
-
 
   Stream<double> getTotalProteinStream() async* {
     final db = await database;
@@ -252,44 +226,4 @@ class eatDatabase {
       await Future.delayed(Duration(seconds: 1));
     }
   }
-
-  // Future<double> getTotalProtein() async {
-  //   final db = await database;
-  //   final DateTime now = DateTime.now();  //여기서는 now만 써도 로컬 시간으로 잘 받아옴
-  //   DateTime currentDay;
-  //
-  //   if (now.hour >= 3) {
-  //     currentDay = DateTime(now.year, now.month, now.day);
-  //   } else {
-  //     currentDay = DateTime(now.year, now.month, now.day - 1);
-  //   } //3시를 기준으로 현재 날짜를 정함
-  //
-  //   final DateTime startTime = DateTime(currentDay.year, currentDay.month, currentDay.day, 3);  //현재 날짜의 새벽 3시 받아오기
-  //   final DateTime endTime = startTime.add(Duration(days: 1));  //다음날까지
-  //   double totalProtein = 0;
-  //
-  //   List<Map<String, dynamic>> result = await db!.rawQuery('SELECT SUM(protein) FROM eat WHERE date >= ? AND date < ?', [startTime.toString(), endTime.toString()]);
-  //
-  //   if (result.isNotEmpty && result[0]['SUM(protein)'] != null) {
-  //     totalProtein = result[0]['SUM(protein)'] as double;
-  //   }
-  //
-  //   return totalProtein;
-  // }
-
-// Future<List<Food>> getEat() async {
-//   final db = await database;
-//   final List<Map<String, dynamic>>? maps = await db?.query('eat');
-//
-//   return maps!.map((food) {
-//     return Food(
-//       food_name: food['food_name'].toString(),
-//       food_size: food['food_size'].toString(),
-//       calorie: food['calorie'].toString(),
-//       protein: food['protein'].toString(),
-//       fat: food['fat'].toString(),
-//       carbohydrate: food['carbohydrate'].toString(),
-//     );
-//   }).toList();
-// } //데이터베이스에 있는 데이터 모두 받아오기 필요없으면 지우기
 }
