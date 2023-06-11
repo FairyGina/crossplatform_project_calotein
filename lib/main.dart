@@ -59,11 +59,22 @@ class _MyHomePageState extends State<MyHomePage> {
   int year = 0;
   Future<List<Food>>? eatList;
 
+  //데이터 저장 전역변수(원래)
+  double totalKcalData_more=0;
+  double totalProteinData_more=0;
+  double totalCarbohydrateData_more=0;
+  double totalFatData_more=0;
+
+
+
   //데이터 저장 전역변수
   double totalKcalData=0;
   double totalProteinData=0;
   double totalCarbohydrateData=0;
   double totalFatData=0;
+
+  //이미지 결정(기본)
+  String image = 'asset/dambi_tw.png';
 
   // 데이터 베이스 가져오기
   @override
@@ -145,150 +156,150 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: widget.titleColor,
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(
-              color: widget.titleColor,
-              fontWeight: FontWeight.bold, // 글꼴을 굵게 설정
-              fontSize: 32, // 글꼴 크기를 32로 변경
-            ),
+      key: _scaffoldKey,
+      backgroundColor: widget.titleColor,
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: TextStyle(
+            color: widget.titleColor,
+            fontWeight: FontWeight.bold, // 글꼴을 굵게 설정
+            fontSize: 32, // 글꼴 크기를 32로 변경
           ),
-          backgroundColor: Colors.white,
-          leading: null,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.account_circle),
-              color: Colors.black54,
-              onPressed: () async {
-                _scaffoldKey.currentState?.openEndDrawer();
-                info = (await db_user_info.getUserInfo())!;
-              },
-            ),
-          ],
         ),
-        endDrawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              Container(
-                  padding: EdgeInsets.all(15.0),
-                  height: 190,
-                  decoration: BoxDecoration(
-                    color: Color(0xff69DFCB),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.only(top: 50),
-                        child: Text(
-                          '나이: ${info != null ? (year - int.parse(info!.getYear() ?? "") + 1) : '정보 없음'}',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+        backgroundColor: Colors.white,
+        leading: null,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.account_circle),
+            color: Colors.black54,
+            onPressed: () async {
+              _scaffoldKey.currentState?.openEndDrawer();
+              info = (await db_user_info.getUserInfo())!;
+            },
+          ),
+        ],
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            Container(
+                padding: EdgeInsets.all(15.0),
+                height: 190,
+                decoration: BoxDecoration(
+                  color: Color(0xff69DFCB),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(top: 50),
+                      child: Text(
+                        '나이: ${info != null ? (year - int.parse(info!.getYear() ?? "") + 1) : '정보 없음'}',
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
                       ),
-                      Container(
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                        '키: ${info?.getCm() ?? ""} cm',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Text(
+                        '몸무게: ${info?.getKg() ?? ""} kg',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
                         padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          '키: ${info?.getCm() ?? ""} cm',
+                        child: info?.getActivity() == '1.2'
+                            ? Text(
+                          '활동량: 안함',
                           style: TextStyle(
                             color: Colors.white,
                           ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          '몸무게: ${info?.getKg() ?? ""} kg',
+                        )
+                            : info?.getActivity() == '1.375'
+                            ? Text(
+                          '활동량: 일주일에 1~2번',
                           style: TextStyle(
                             color: Colors.white,
                           ),
-                        ),
-                      ),
-                      Container(
-                          padding: EdgeInsets.only(top: 10),
-                          child: info?.getActivity() == '1.2'
-                              ? Text(
-                            '활동량: 안함',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          )
-                              : info?.getActivity() == '1.375'
-                              ? Text(
-                            '활동량: 일주일에 1~2번',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          )
-                              : info?.getActivity() == '1.55'
-                              ? Text(
-                            '활동량: 일주일에 3~4번',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          )
-                              : info?.getActivity() == '1.725'
-                              ? Text(
-                            '활동량: 일주일에 5~6번',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          )
-                              : Text(
-                            '활동량: 매일',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          )
-                      ),
-                    ],
-                  )
+                        )
+                            : info?.getActivity() == '1.55'
+                            ? Text(
+                          '활동량: 일주일에 3~4번',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
+                            : info?.getActivity() == '1.725'
+                            ? Text(
+                          '활동량: 일주일에 5~6번',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
+                            : Text(
+                          '활동량: 매일',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
+                    ),
+                  ],
+                )
+            ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.grey),
+                ),
               ),
-              Container(
+              child: ListTile(
+                title: Text('정보 변경'),
+                onTap: () {
+                  Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => infoModify()),  //이거는 그냥 메인에서 음식 검색 페이지로 넘어가는 실험용
+                  ).then((value) {
+                    setState(() {
+                      db_user_info.getUserInfo().then((fetchedInfo) {
+                        info = fetchedInfo;
+                      });
+                    });
+                  });
+                },
+              ),
+            ),
+            Container(
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(color: Colors.grey),
                   ),
                 ),
                 child: ListTile(
-                  title: Text('정보 변경'),
+                  title: Text('기록'),
                   onTap: () {
                     Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => infoModify()),  //이거는 그냥 메인에서 음식 검색 페이지로 넘어가는 실험용
-                    ).then((value) {
-                      setState(() {
-                        db_user_info.getUserInfo().then((fetchedInfo) {
-                          info = fetchedInfo;
-                        });
-                      });
-                    });
+                      context, MaterialPageRoute(builder: (context) => Record()),
+                    );
                   },
-                ),
-              ),
-              Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: Colors.grey),
-                    ),
-                  ),
-                  child: ListTile(
-                    title: Text('기록'),
-                    onTap: () {
-                      Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => Record()),
-                      );
-                    },
-                  )
-              ),
-            ],
-          ),
+                )
+            ),
+          ],
         ),
-        //여기까지 옆에 프로필 화면
+      ),
+      //여기까지 옆에 프로필 화면
 
       body: ListView(
         children: [
@@ -315,7 +326,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Container(
-              height: 60, // 원래의 중앙 정렬을 유지하기 위해 추가된 빈 컨테이너
+            height: 60, // 원래의 중앙 정렬을 유지하기 위해 추가된 빈 컨테이너
           ),
           //원형그래프
           Center(
@@ -355,6 +366,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           double _totalkcal = snapshot.data ?? 0;
 
                           double temp_totalkcal= _totalkcal / double.parse(_needKcalText()) * 100;
+                          totalKcalData_more = temp_totalkcal;
+
                           if(temp_totalkcal>100) temp_totalkcal = 100;
                           totalKcalData = temp_totalkcal;
 
@@ -418,8 +431,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             double _totalkcal = snapshot.data ?? 0;
 
                             double temp_totalkcal= _totalkcal / double.parse(_needKcalText()) * 100;
-                            if(temp_totalkcal > 100) temp_totalkcal = 100;
-                            totalKcalData = temp_totalkcal;
+                            totalKcalData_more = temp_totalkcal;
 
                             String totalkcal = _totalkcal.toStringAsFixed(0);
                             return Text(
@@ -486,6 +498,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   double _totalCarbohydrate = snapshot.data ?? 0;
 
                                                   double result = _totalCarbohydrate / double.parse(_needCarbohydrateText()) * 100;
+                                                  totalCarbohydrateData_more = result;
+
                                                   if (result > 100) result = 100;
                                                   totalCarbohydrateData = result;
 
@@ -532,9 +546,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                           double _totalCarbohydrate = snapshot.data ?? 0;
                                           String totalCarbohydrate = _totalCarbohydrate.toStringAsFixed(0);
 
-                                          double result = _totalCarbohydrate / double.parse(_needCarbohydrateText()) * 100;
-                                          if (result > 100) result = 100;
-                                          totalCarbohydrateData = result;
 
                                           return Text(
                                             '${totalCarbohydrate} / ${_needCarbohydrateText()} g  \n',
@@ -552,6 +563,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
+
+                  Container(
+                    width: 8.0, // 간격을 조정하기 위한 Container
+                  ),
+
                   Container(
                     padding: const EdgeInsets.all(4.0),
                     child: Column(
@@ -596,6 +612,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   double _totalProtein = snapshot.data ?? 0;
 
                                                   double result = _totalProtein / double.parse(_needProteinText()) * 100;
+                                                  totalProteinData_more = result;
+
                                                   if (result > 100) result = 100;
                                                   totalProteinData = result;
 
@@ -641,17 +659,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                           }
                                           double _totalProtein = snapshot.data ?? 0;
 
-                                          double result=_totalProtein/double.parse(_needProteinText())* 100;
-                                          if(result>100) result = 100;
-                                          totalProteinData = result;
-
                                           String totalProtein = _totalProtein.toStringAsFixed(0);
 
                                           return Text(
                                             '${totalProtein} / ${_needProteinText()} g\n',
                                             style: TextStyle(fontSize: 16, color: Colors.white),
                                           );
-                                          },
+                                        },
                                       ),
                                     ],
                                   ),
@@ -663,9 +677,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
+
                   Container(
                     width: 16.0, // 간격을 조정하기 위한 Container
                   ),
+
                   Container(
                     padding: const EdgeInsets.all(4.0),
                     child: Column(
@@ -710,6 +726,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   double _totalFat = snapshot.data ?? 0;
 
                                                   double result = _totalFat / double.parse(_needFatText()) * 100;
+                                                  totalFatData_more = result;
+
                                                   if (result > 100) result = 100;
                                                   totalFatData = result;
 
@@ -755,9 +773,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                           }
                                           double _totalFat = snapshot.data ?? 0;
 
-                                          double result=_totalFat/double.parse(_needFatText())* 100;
-                                          if(result>100) result = 100;
-                                          totalFatData = result;
 
                                           String totalFat = _totalFat.toStringAsFixed(0);
 
@@ -783,108 +798,189 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Center(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 4.0,
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+
+                children:[
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 4.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Container(
+                          alignment: Alignment.topLeft, // 왼쪽 정렬 설정
+                          child: Column(
+
+                            crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬 설정
+                            children: [
+                              StreamBuilder<double>(
+                                stream: eatdb!.getTotalKcalStream(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  }
+                                  if (!snapshot.hasData) {
+                                    return CircularProgressIndicator();
+                                  }
+                                  double _totalkcal = snapshot.data ?? 0;
+                                  double result=double.parse(_needKcalText())-_totalkcal;
+                                  if(result<0) result = 0;
+                                  String totalkcal = result.toStringAsFixed(0);
+
+                                  return Text(
+                                    '남은 칼로리: $totalkcal kcal',
+                                    style: TextStyle(fontSize: 16, color: Color(0xff69DFCB)),
+                                    textAlign: TextAlign.center, // 가운데 정렬 설정
+                                  );
+                                },
+                              ),
+
+                              Padding(padding: EdgeInsets.only(top: 4),),
+
+
+                              StreamBuilder<double>(
+                                stream: eatdb!.getTotalCarbohydrateStream(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  }
+                                  if (!snapshot.hasData) {
+                                    return CircularProgressIndicator();
+                                  }
+                                  double _totalCarbohydrate = snapshot.data ?? 0;
+                                  double result=_totalCarbohydrate/double.parse(_needCarbohydrateText())* 100;
+                                  if(result>100) result = 100;
+                                  String totalCarbohydrate = result.toStringAsFixed(0);
+
+                                  return Text(
+                                    '탄수화물: $totalCarbohydrate %',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(fontSize: 16, color: Color(0xff69DFCB)),
+                                  );
+                                },
+                              ),
+
+
+                              StreamBuilder<double>(
+                                stream: eatdb!.getTotalProteinStream(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  }
+                                  if (!snapshot.hasData) {
+                                    return CircularProgressIndicator();
+                                  }
+                                  double _totalProtein = snapshot.data ?? 0;
+                                  double result=_totalProtein/double.parse(_needProteinText())* 100;
+                                  if(result>100) result = 100;
+                                  String totalProtein = result.toStringAsFixed(0);
+
+                                  return Text(
+                                    '단백질: $totalProtein %',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(fontSize: 16, color: Color(0xff69DFCB)),
+                                  );
+                                },
+                              ),
+                              StreamBuilder<double>(
+                                stream: eatdb!.getTotalFatStream(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  }
+                                  if (!snapshot.hasData) {
+                                    return CircularProgressIndicator();
+                                  }
+                                  double _totalFat = snapshot.data ?? 0;
+                                  double result=_totalFat/double.parse(_needFatText())* 100;
+                                  if(result>100) result = 100;
+                                  String totalFat = result.toStringAsFixed(0);
+
+                                  return Text(
+                                    '지방: $totalFat %',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(fontSize: 16, color: Color(0xff69DFCB)),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        Container(
+                          width:30,
+                        ),// 이미지 파일 경로를 지정하세요.
+
+
+                        StreamBuilder<double>(
+                            stream: eatdb!.getTotalProteinStream(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              }
+                              if (!snapshot.hasData) {
+                                return CircularProgressIndicator();
+                              }
+
+                              if((totalKcalData_more>=40)){
+                                image = 'asset/dambi_eat.png';
+                              }
+
+                              if((totalProteinData_more>=100)&&((totalKcalData_more>=80))){
+                                image = 'asset/dambi_mu.png';
+                              }
+
+                              if(totalKcalData_more>130){
+                                image = 'asset/dambi_fu.png';
+                              }
+
+
+
+
+                              return Container(
+                                alignment: Alignment.topRight, // 오른쪽 정렬 설정
+                                width: 150, // 이미지의 너비를 조정하세요.
+                                height: 150, // 이미지의 높이를 조정하세요.
+                                child: Image.asset(image),
+                              );// 이미지 파일 경로를 지정하세요.
+                            }
+                        ),
+
+
+
+
+
+
+                        //
+                        // Container(
+                        //   alignment: Alignment.topRight, // 오른쪽 정렬 설정
+                        //   width: 150, // 이미지의 너비를 조정하세요.
+                        //   height: 150, // 이미지의 높이를 조정하세요.
+                        //   child: Image.asset('asset/dambi_fu.png'),
+                        // ),// 이미지 파일 경로를 지정하세요.
+                      ],
+
+                    ),
+
                   ),
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    StreamBuilder<double>(
-                    stream: eatdb!.getTotalKcalStream(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
-                      if (!snapshot.hasData) {
-                        return CircularProgressIndicator();
-                      }
-                      double _totalkcal = snapshot.data ?? 0;
-                      double result=double.parse(_needKcalText())-_totalkcal;
-                      if(result<0) result = 0;
-                      String totalkcal = result.toStringAsFixed(0);
 
-                      return Text(
-                        '칼로리: $totalkcal kcal',
-                        style: TextStyle(fontSize: 16, color: Color(0xff69DFCB)),
-                        textAlign: TextAlign.center, // 가운데 정렬 설정
-                      );
-                    },
-                  ),
-                    StreamBuilder<double>(
-                      stream: eatdb!.getTotalCarbohydrateStream(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-                        if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
-                        }
-                        double _totalCarbohydrate = snapshot.data ?? 0;
-                        double result=_totalCarbohydrate/double.parse(_needCarbohydrateText())* 100;
-                        if(result>100) result = 100;
-                        String totalCarbohydrate = result.toStringAsFixed(0);
 
-                        return Text(
-                          '탄수화물: $totalCarbohydrate %',
-                          style: TextStyle(fontSize: 16, color: Color(0xff69DFCB)),
-                        );
-                      },
-                    ),
-                    StreamBuilder<double>(
-                      stream: eatdb!.getTotalProteinStream(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-                        if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
-                        }
-                        double _totalProtein = snapshot.data ?? 0;
-                        double result=_totalProtein/double.parse(_needProteinText())* 100;
-                        if(result>100) result = 100;
-                        String totalProtein = result.toStringAsFixed(0);
+                ],
+              ),
 
-                        return Text(
-                          '단백질: $totalProtein %',
-                          style: TextStyle(fontSize: 16, color: Color(0xff69DFCB)),
-                        );
-                      },
-                    ),
-                    StreamBuilder<double>(
-                      stream: eatdb!.getTotalFatStream(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-                        if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
-                        }
-                        double _totalFat = snapshot.data ?? 0;
-                        double result=_totalFat/double.parse(_needFatText())* 100;
-                        if(result>100) result = 100;
-                        String totalFat = result.toStringAsFixed(0);
-
-                        return Text(
-                          '지방: $totalFat %',
-                          style: TextStyle(fontSize: 16, color: Color(0xff69DFCB)),
-                        );
-                      },
-                    ),
-                  ],
-                ),
               ),
             ),
-          ),
+
         ],
       ),
     );
   }
 }
-

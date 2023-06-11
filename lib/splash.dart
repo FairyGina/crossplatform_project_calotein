@@ -25,7 +25,7 @@ class _SplashPage extends StatefulWidget {
   }
 }
 class _Splash extends State<_SplashPage> {
-  String image = 'asset/dambi.png'; //여기에 넣을 이미지 경로 넣기(파일이 gif였음 좋겠음)
+  String image = 'asset/dambi_intro2.gif'; //여기에 넣을 이미지 경로 넣기(파일이 gif였음 좋겠음)
   @override
   void initState() {
     super.initState();
@@ -40,14 +40,15 @@ class _Splash extends State<_SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = 100;
-    double height = 100;
+    double width = 10;
+    double height = 10;
 
     return Container(
         decoration: BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
-            image: AssetImage(image), fit: BoxFit.contain
+            image: AssetImage(image),
+              // fit: BoxFit.contain
           )
         ),
       child: Stack(

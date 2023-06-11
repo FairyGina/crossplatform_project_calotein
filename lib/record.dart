@@ -171,14 +171,14 @@ class RecordState extends State<_Record> {
       appBar: AppBar(
         title: Text('기록'),
         backgroundColor: Color(0xff69DFCB),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (_) => MyHomePage(title: 'calotein',titleColor: Color(0xff69DFCB)))
-              );
-            },
-          ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => MyHomePage(title: 'calotein',titleColor: Color(0xff69DFCB)))
+            );
+          },
+        ),
       ),
       body: ListView(
         // child: Column(
