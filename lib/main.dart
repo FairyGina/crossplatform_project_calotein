@@ -565,7 +565,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
 
                   Container(
-                    width: 8.0, // 간격을 조정하기 위한 Container
+                    width: 12.0, // 간격을 조정하기 위한 Container
                   ),
 
                   Container(
@@ -773,7 +773,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                           }
                                           double _totalFat = snapshot.data ?? 0;
 
-
                                           String totalFat = _totalFat.toStringAsFixed(0);
 
                                           return Text(
@@ -801,7 +800,6 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-
                 children:[
                   Container(
                     decoration: BoxDecoration(
@@ -814,11 +812,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
+                          height: 150,
+                          padding: EdgeInsets.only(top: 35),
                           alignment: Alignment.topLeft, // 왼쪽 정렬 설정
                           child: Column(
-
                             crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬 설정
                             children: [
                               StreamBuilder<double>(
@@ -842,10 +842,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   );
                                 },
                               ),
-
                               Padding(padding: EdgeInsets.only(top: 4),),
-
-
                               StreamBuilder<double>(
                                 stream: eatdb!.getTotalCarbohydrateStream(),
                                 builder: (context, snapshot) {
@@ -867,8 +864,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                   );
                                 },
                               ),
-
-
                               StreamBuilder<double>(
                                 stream: eatdb!.getTotalProteinStream(),
                                 builder: (context, snapshot) {
@@ -914,11 +909,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                           ),
                         ),
-
                         Container(
                           width:30,
                         ),// 이미지 파일 경로를 지정하세요.
-
 
                         StreamBuilder<double>(
                             stream: eatdb!.getTotalProteinStream(),
@@ -929,56 +922,30 @@ class _MyHomePageState extends State<MyHomePage> {
                               if (!snapshot.hasData) {
                                 return CircularProgressIndicator();
                               }
-
                               if((totalKcalData_more>=40)){
                                 image = 'asset/dambi_eat.png';
                               }
-
                               if((totalProteinData_more>=100)&&((totalKcalData_more>=80))){
                                 image = 'asset/dambi_mu.png';
                               }
-
                               if(totalKcalData_more>130){
                                 image = 'asset/dambi_fu.png';
                               }
-
-
-
-
                               return Container(
                                 alignment: Alignment.topRight, // 오른쪽 정렬 설정
-                                width: 150, // 이미지의 너비를 조정하세요.
-                                height: 150, // 이미지의 높이를 조정하세요.
+                                width: 120, // 이미지의 너비를 조정하세요.
+                                height: 120, // 이미지의 높이를 조정하세요.
                                 child: Image.asset(image),
                               );// 이미지 파일 경로를 지정하세요.
                             }
                         ),
-
-
-
-
-
-
-                        //
-                        // Container(
-                        //   alignment: Alignment.topRight, // 오른쪽 정렬 설정
-                        //   width: 150, // 이미지의 너비를 조정하세요.
-                        //   height: 150, // 이미지의 높이를 조정하세요.
-                        //   child: Image.asset('asset/dambi_fu.png'),
-                        // ),// 이미지 파일 경로를 지정하세요.
                       ],
-
                     ),
-
                   ),
-
-
                 ],
               ),
-
               ),
             ),
-
         ],
       ),
     );

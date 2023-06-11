@@ -107,7 +107,7 @@ class _infoModify extends State<infoModify> {
                   children: <Widget>[
                     //생년월일 입력
                     Container(
-                      width: 135,
+                      width: 125,
                       padding: EdgeInsets.all(3.0),
                       child: TextFormField(
                         decoration: InputDecoration(
@@ -118,7 +118,7 @@ class _infoModify extends State<infoModify> {
                       ),
                     ),
                     Container(
-                      width: 115,
+                      width: 105,
                       padding: EdgeInsets.all(3.0),
                       child: TextField(
                         decoration: InputDecoration(
@@ -129,7 +129,7 @@ class _infoModify extends State<infoModify> {
                       ),
                     ),
                     Container(
-                      width: 115,
+                      width: 105,
                       padding: EdgeInsets.all(3.0),
                       child: TextField(
                         decoration: InputDecoration(

@@ -82,11 +82,11 @@ class RecordState extends State<_Record> {
     if(j==0) {
       barColor = Colors.red;
     } else if(j==1) {
-      barColor = Colors.grey;
+      barColor = Colors.black87;
     } else if(j==2) {
       barColor = Colors.blue;
     } else if(j==3) {
-      barColor = Colors.yellow;
+      barColor = Colors.amber;
     }
 
     return barColor;
@@ -553,11 +553,11 @@ class RecordState extends State<_Record> {
                       String formattedCarbohydrate = averageProtein.toStringAsFixed(0);
                       String formattedFat = averageFat.toStringAsFixed(0);
 
-                      String space = "           ";
+                      String space = "         ";
 
                       return Center(
                         child: Container(
-                          width: 400.0,
+                          width: 350.0,
                           // width: 500.0,
                           margin: EdgeInsets.only(bottom: 32.0),
                           child: Column(
@@ -565,7 +565,7 @@ class RecordState extends State<_Record> {
                               Container(
                                 height: 300,
                                 child: Padding(
-                                  padding:EdgeInsets.only(top: 16.0, bottom: 6, left: 16.0, right: 16.0),
+                                  padding:EdgeInsets.only(top: 30.0, bottom: 6, left: 16.0, right: 16.0),
                                   child: BarChart(
                                     BarChartData(
                                       maxY: 100,
@@ -636,10 +636,34 @@ class RecordState extends State<_Record> {
                                     ),
                                     SizedBox(height: 8.0),
                                     Text(
-                                      '$formattedKcal kcal\n$formattedProtein g\n$formattedCarbohydrate g\n$formattedFat g',
+                                      '칼로리: $formattedKcal kcal',
                                       style: TextStyle(
                                         fontSize: 16,
-                                        color: Colors. grey,
+                                        color: Colors. red,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      '단백질: $formattedProtein g',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors. black87,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      '탄수화물: $formattedCarbohydrate g',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors. blue,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      '지방: $formattedFat g',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.amber,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
